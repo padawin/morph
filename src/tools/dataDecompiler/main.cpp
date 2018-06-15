@@ -5,6 +5,7 @@
 #include "ResourceManager.hpp"
 
 std::string cleanFileInPath(std::string path);
+void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race);
 template <typename T>
 bool decompileFile(
 	ResourceManager<T> *resourceManager,
@@ -28,8 +29,16 @@ int main(int argc, char* argv[]) {
 		fileIn = cleanFileInPath(argv[2]),
 		fileOut = argv[3];
 
-	std::cerr << "Invalid type: " << type << "\n";
-	return 2;
+	bool ret;
+	if (type == "actors") {
+		ret = decompileFile(new ResourceManager<S_ActorTypeData>(), writeActorType, fileIn, fileOut);
+	}
+	else {
+		std::cerr << "Invalid type: " << type << "\n";
+		return 2;
+	}
+
+	return ret ? 0 : 1;
 }
 
 std::string cleanFileInPath(std::string path) {
@@ -46,6 +55,11 @@ std::string cleanFileInPath(std::string path) {
 		return std::string(cwd) + "/" + path;
 	}
 }
+
+void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race) {
+	fileOutStream << race.health << " " << race.attack << "\n";
+}
+
 
 template <typename T>
 bool decompileFile(

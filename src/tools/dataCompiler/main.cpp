@@ -5,6 +5,7 @@
 #include "ResourceManager.hpp"
 
 std::string cleanFileInPath(std::string path);
+bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data);
 
 int main(int argc, char* argv[]) {
 	// expects the following arguments:
@@ -21,8 +22,19 @@ int main(int argc, char* argv[]) {
 		fileIn = cleanFileInPath(argv[2]),
 		fileOut = argv[3];
 
-	std::cerr << "Invalid type: " << type << "\n";
-	return 2;
+	if (type == "actors") {
+		ResourceManager<S_ActorTypeData> resourceManager;
+		bool res = resourceManager.compileFile(fileIn, fileOut, readActorTypeLine);
+		if (!res) {
+			return 1;
+		}
+	}
+	else {
+		std::cerr << "Invalid type: " << type << "\n";
+		return 2;
+	}
+
+	return 0;
 }
 
 std::string cleanFileInPath(std::string path) {
@@ -38,4 +50,15 @@ std::string cleanFileInPath(std::string path) {
 
 		return std::string(cwd) + "/" + path;
 	}
+}
+
+bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data) {
+	int result = sscanf(
+		line, "%d %d\n", &data.health, &data.attack
+	);
+	if (result != 2) {
+		return false;
+	}
+
+	return true;
 }

@@ -6,7 +6,7 @@
 #include "globals.hpp"
 #include "Utils.hpp"
 #include "SDL2_framework/Game.h"
-// #include "State/Play.hpp"
+#include "State/Play.hpp"
 #include "ResourceManager.hpp"
 #include <libgen.h>
 
@@ -38,7 +38,7 @@ int main(int argc, char* args[]) {
 		return 1;
 	}
 
-	// g->getStateMachine()->changeState(new PlayState());
+	g->getStateMachine()->changeState(new PlayState());
 	while (g->isRunning()) {
 		frameStart = SDL_GetTicks();
 		InputUpdateResult result = g->handleEvents();

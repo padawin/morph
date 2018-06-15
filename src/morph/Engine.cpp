@@ -1,0 +1,71 @@
+#include "Engine.hpp"
+#include "globals.hpp"
+#include "HUD.hpp"
+#include "GUI.hpp"
+#include "Map/Renderer.hpp"
+#include "Actor.hpp"
+#include <iostream>
+#include <iterator>
+#include "SDL2_framework/Game.h"
+
+Engine::Engine() :
+	m_hero(nullptr),
+	m_graphicFactory(GraphicFactory()),
+	m_actorFactory(ActorFactory(m_graphicFactory)),
+	m_map(Map()),
+	m_mapRenderer(MapRenderer(m_map, m_graphicFactory)),
+	m_camera()
+{
+	m_camera = {
+		0, 0,
+		Game::Instance()->getScreenWidth(), Game::Instance()->getScreenHeight()
+	};
+
+	m_mapRenderer.setCamera(m_camera);
+}
+
+Engine::~Engine() {}
+
+Map &Engine::getMap() {
+	return m_map;
+}
+
+std::shared_ptr<Actor> Engine::getHero() {
+	return m_hero;
+}
+
+bool Engine::loadTaxonomy(std::string filePath) {
+	bool ret = true;
+	if (m_actorFactory.parseTaxonomy(filePath.c_str())) {
+		std::cout << "Taxonomy parsed\n";
+	}
+	else {
+		std::cout << "error parsing taxonomy" << std::endl;
+		ret = false;
+	}
+
+	return ret;
+}
+
+void Engine::initialiseHero() {
+	m_hero = m_actorFactory.createHero();
+}
+
+void Engine::update() {
+	m_hero->update(this);
+	for (auto actor : m_map.getActors()) {
+		if (actor != m_hero) {
+			actor->update(this);
+		}
+	}
+
+	if (!m_hero->isDead()) {
+		m_map.clearDeadActors();
+	}
+}
+
+void Engine::render() {
+	m_mapRenderer.render();
+	// render HUD
+	HUD::render(Game::Instance(), m_hero);
+}

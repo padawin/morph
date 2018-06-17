@@ -22,6 +22,7 @@ Engine::Engine() :
 	};
 
 	m_mapRenderer.setCamera(m_camera);
+	m_map.setDimensions(m_camera.w, m_camera.h);
 }
 
 Engine::~Engine() {}
@@ -49,6 +50,9 @@ bool Engine::loadTaxonomy(std::string filePath) {
 
 void Engine::initialiseHero() {
 	m_hero = m_actorFactory.createHero();
+	m_hero->setX(m_map.getWidth() / 2);
+	m_hero->setY(9 * m_map.getHeight() / 10);
+	m_map.addActor(m_hero);
 }
 
 void Engine::update() {

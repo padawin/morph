@@ -58,9 +58,9 @@ bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data) {
 		line, "%d %d %d %d %d\n",
 		&data.health, &data.attack, &red, &green, &blue
 	);
-	data.red = (char) (red & 255);
-	data.green = (char) (green & 255);
-	data.blue = (char) (blue & 255);
+	data.red = (unsigned char) (red & 255);
+	data.green = (unsigned char) (green & 255);
+	data.blue = (unsigned char) (blue & 255);
 	if (result != 5) {
 		return false;
 	}

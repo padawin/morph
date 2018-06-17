@@ -4,6 +4,9 @@
 struct S_ActorTypeData {
 	int health;
 	int attack;
+	unsigned char red;
+	unsigned char green;
+	unsigned char blue;
 };
 
 typedef std::pair<int, int> t_coordinates;

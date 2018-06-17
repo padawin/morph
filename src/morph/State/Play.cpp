@@ -15,6 +15,13 @@ void PlayState::update() {
 		return;
 	}
 
+	engine.update();
+	if (engine.getHero()->isDead()) {
+		Game::Instance()->getStateMachine()->changeState(
+			new GameOverState()
+		);
+	}
+
 	GameState::update();
 }
 
@@ -25,6 +32,12 @@ void PlayState::render() {
 
 bool PlayState::onEnter() {
 	bool ret = true;
+	ret &= engine.loadTaxonomy(
+		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"
+	);
+	if (ret) {
+		engine.initialiseHero();
+	}
 	return ret;
 }
 

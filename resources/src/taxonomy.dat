@@ -1,10 +1,10 @@
 # format:
-# health attack
+# health attack red green blue
 # player
-10 3
+10 3 255 255 255
 # green square
-2 2
+2 2 0 255 0
 # blue square
-7 5
+7 5 0 0 255
 # red square
-12 8
+12 8 255 0 0

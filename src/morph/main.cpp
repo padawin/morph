@@ -41,10 +41,8 @@ int main(int argc, char* args[]) {
 	g->getStateMachine()->changeState(new PlayState());
 	while (g->isRunning()) {
 		frameStart = SDL_GetTicks();
-		InputUpdateResult result = g->handleEvents();
-		if (result == HAS_EVENT) {
-			g->update();
-		}
+		g->handleEvents();
+		g->update();
 		g->render();
 
 		// use a delay to cap the fps

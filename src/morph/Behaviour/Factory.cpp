@@ -1,8 +1,9 @@
 #include "Behaviour/Factory.hpp"
-#include "Behaviour/Behaviour.hpp"
+#include "Behaviour/Player.hpp"
 
 BehaviourFactory::BehaviourFactory() {
 	m_vBehaviours = {
+		new BehaviourPlayer()
 	};
 }
 

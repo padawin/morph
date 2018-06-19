@@ -24,6 +24,7 @@ class Actor {
 
 	int m_iX = 0;
 	int m_iY = 0;
+	int m_iSpeed = 2;
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;
@@ -52,6 +53,7 @@ class Actor {
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
 	int getX();
 	int getY();
+	int getSpeed();
 	unsigned char getRed();
 	unsigned char getGreen();
 	unsigned char getBlue();

@@ -42,6 +42,7 @@ std::shared_ptr<Actor> ActorFactory::createEnemy(E_ActorTypes type) {
 
 std::shared_ptr<Actor> ActorFactory::createHero() {
 	std::shared_ptr<Actor> hero = createActor(TYPE_PLAYER);
+	hero->setBehaviour(m_behaviourFactory.getBehaviour(BEHAVIOUR_PLAYER));
 	hero->setGraphic((GraphicActor*) m_graphicFactory.getGraphicPlayer());
 	return hero;
 }

@@ -35,6 +35,7 @@ void Actor::setColor(unsigned char red, unsigned char green, unsigned char blue)
 }
 int Actor::getX() { return m_iX; }
 int Actor::getY() { return m_iY; }
+int Actor::getSpeed() { return m_iSpeed; }
 unsigned char Actor::getRed() { return m_cRed; }
 unsigned char Actor::getGreen() { return m_cGreen; }
 unsigned char Actor::getBlue() { return m_cBlue; }

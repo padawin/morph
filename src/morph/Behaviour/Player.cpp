@@ -31,6 +31,10 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor) {
 		horizontalPressed = 0;
 	}
 
-	actor->setX(actor->getX() + actor->getSpeed() * horizontalPressed);
-	actor->setY(actor->getY() + actor->getSpeed() * verticalPressed);
+	MoveCommand cmd = MoveCommand();
+	cmd.execute(
+		actor,
+		actor->getX() + actor->getSpeed() * horizontalPressed,
+		actor->getY() + actor->getSpeed() * verticalPressed
+	);
 }

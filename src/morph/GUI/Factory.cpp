@@ -1,18 +1,18 @@
 #include "GUI/Factory.hpp"
-#include "GUI/Actor.hpp"
-#include "GUI/Player.hpp"
+#include "GUI/ActorSquare.hpp"
 
 GraphicFactory::GraphicFactory() {
 	m_vGraphics = {
-		new GraphicActor(),
-		new GraphicPlayer()
+		new GraphicActorSquare()
 	};
 }
 
-GraphicActor* GraphicFactory::getGraphicActor() {
-	return (GraphicActor*) m_vGraphics[0];
+GraphicFactory::~GraphicFactory() {
+	for (auto graphic : m_vGraphics) {
+		delete graphic;
+	}
 }
 
-GraphicPlayer* GraphicFactory::getGraphicPlayer() {
-	return (GraphicPlayer*) m_vGraphics[1];
+GraphicActor* GraphicFactory::getGraphicActor(long unsigned int graphic) {
+	return (GraphicActor*) m_vGraphics[graphic];
 }

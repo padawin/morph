@@ -4,11 +4,10 @@
 #include <vector>
 #include <memory>
 
+#define GRAPHIC_ACTOR_SQUARE 0
+
 class Graphic;
-class GraphicTerrain;
-class GraphicObject;
 class GraphicActor;
-class GraphicPlayer;
 
 class GraphicFactory {
 	private:
@@ -16,8 +15,8 @@ class GraphicFactory {
 
 	public:
 	GraphicFactory();
-	GraphicActor* getGraphicActor();
-	GraphicPlayer* getGraphicPlayer();
+	~GraphicFactory();
+	GraphicActor* getGraphicActor(long unsigned int graphic);
 
 };
 

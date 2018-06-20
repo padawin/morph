@@ -61,6 +61,11 @@ void Actor::update(Engine *engine) {
 	if (m_behaviour != 0) {
 		m_behaviour->update(engine, this);
 	}
+	for (int attack = 0; attack < 4; ++attack) {
+		if (m_iAttackDuration[attack] > 0) {
+			--m_iAttackDuration[attack];
+		}
+	}
 }
 
 void Actor::render(int displayShiftX, int displayShiftY) {
@@ -69,10 +74,10 @@ void Actor::render(int displayShiftX, int displayShiftY) {
 	}
 }
 
-void Actor::attack(std::shared_ptr<Actor> target) {
-	target->m_iHealth -= m_iAttack;
-	if (target->m_iHealth < 0) {
-		target->m_iHealth = 0;
+void Actor::attack(int attack) {
+	if (m_iAttackDuration[attack] > 0) {
+		return;
 	}
-	target->setLastTimeHit();
+
+	m_iAttackDuration[attack] = DURATION_ATTACK;
 }

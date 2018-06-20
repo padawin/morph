@@ -4,6 +4,12 @@
 #include <memory>
 #include <string>
 
+#define ATTACK_UP 0
+#define ATTACK_RIGHT 1
+#define ATTACK_DOWN 2
+#define ATTACK_LEFT 3
+#define DURATION_ATTACK 10
+
 class Behaviour;
 class GraphicActor;
 class Engine;
@@ -25,6 +31,8 @@ class Actor {
 	int m_iX = 0;
 	int m_iY = 0;
 	int m_iSpeed = 2;
+
+	char m_iAttackDuration[4] = {0, 0, 0, 0};
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;
@@ -64,7 +72,7 @@ class Actor {
 	void update(Engine *engine);
 	void render(int displayShiftX, int displayShiftY);
 
-	void attack(std::shared_ptr<Actor> target);
+	void attack(int attack);
 };
 
 #endif

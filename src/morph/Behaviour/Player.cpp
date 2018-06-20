@@ -5,6 +5,7 @@
 
 bool BehaviourPlayer::update(__attribute__((unused)) Engine* engine, Actor* actor) {
 	_updatePlayerPosition(actor);
+	_tryAttack(actor);
 	return true;
 }
 
@@ -37,4 +38,20 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor) {
 		actor->getX() + actor->getSpeed() * horizontalPressed,
 		actor->getY() + actor->getSpeed() * verticalPressed
 	);
+}
+
+void BehaviourPlayer::_tryAttack(Actor* actor) {
+	UserActions* userActions = ServiceProvider::getUserActions();
+	if (userActions->getActionState("ATTACK_UP")) {
+		actor->attack(ATTACK_UP);
+	}
+	if (userActions->getActionState("ATTACK_RIGHT")) {
+		actor->attack(ATTACK_RIGHT);
+	}
+	if (userActions->getActionState("ATTACK_DOWN")) {
+		actor->attack(ATTACK_DOWN);
+	}
+	if (userActions->getActionState("ATTACK_LEFT")) {
+		actor->attack(ATTACK_LEFT);
+	}
 }

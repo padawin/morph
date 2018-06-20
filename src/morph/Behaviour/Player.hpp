@@ -10,6 +10,7 @@ class Map;
 class BehaviourPlayer : public Behaviour {
 	private:
 	void _updatePlayerPosition(Actor* actor);
+	void _tryAttack(Actor* actor);
 
 	public:
 	bool update(Engine* engine, Actor* actor);

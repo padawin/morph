@@ -73,6 +73,7 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attack);
+	int getAttackDuration(int attack);
 };
 
 #endif

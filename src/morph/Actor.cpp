@@ -32,6 +32,8 @@ int Actor::getSpeed() { return m_iSpeed; }
 unsigned char Actor::getRed() { return m_type.getData().red; }
 unsigned char Actor::getGreen() { return m_type.getData().green; }
 unsigned char Actor::getBlue() { return m_type.getData().blue; }
+int Actor::getWidth() { return m_type.getData().width; }
+int Actor::getHeight() { return m_type.getData().height; }
 ActorType &Actor::getType() { return m_type; }
 
 void Actor::setBehaviour(Behaviour* b) {

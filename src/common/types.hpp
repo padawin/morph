@@ -8,6 +8,8 @@ struct S_ActorTypeData {
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;
+	int width;
+	int height;
 };
 
 typedef std::pair<int, int> t_coordinates;

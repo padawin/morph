@@ -59,6 +59,9 @@ class Actor {
 	unsigned char getGreen();
 	unsigned char getBlue();
 
+	int getWidth();
+	int getHeight();
+
 	void setLastTimeHit();
 	uint32_t getLastTimeHit();
 

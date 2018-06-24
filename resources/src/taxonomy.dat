@@ -1,10 +1,10 @@
 # format:
-# graphic health attack red green blue
+# graphic health attack red green blue width height
 # player
-0 10 3 255 255 255
+0 10 3 255 255 255 16 16
 # green square
-0 2 2 0 255 0
+0 2 2 0 255 0 16 16
 # blue square
-0 7 5 0 0 255
+0 7 5 0 0 255 16 16
 # red square
-0 12 8 255 0 0
+0 12 8 255 0 0 16 16

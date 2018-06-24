@@ -41,6 +41,10 @@ all: game
 
 full: tools game build-resources
 
+build-resources:
+	./bin/tools/data-compiler actors resources/src/taxonomy.dat resources/taxonomy.dat
+
+
 game: $(PROG)
 
 -include $(DEP)

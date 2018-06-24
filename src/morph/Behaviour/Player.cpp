@@ -4,13 +4,13 @@
 #include "SDL2_framework/UserActions.h"
 #include "SDL2_framework/ServiceProvider.h"
 
-bool BehaviourPlayer::update(__attribute__((unused)) Engine* engine, Actor* actor) {
-	_updatePlayerPosition(actor);
+bool BehaviourPlayer::update(Engine* engine, Actor* actor) {
+	_updatePlayerPosition(actor, engine);
 	_tryAttack(actor);
 	return true;
 }
 
-void BehaviourPlayer::_updatePlayerPosition(Actor* actor) {
+void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 	char verticalPressed = 0;
 	char horizontalPressed = 0;
 	UserActions* userActions = ServiceProvider::getUserActions();
@@ -33,12 +33,28 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor) {
 		horizontalPressed = 0;
 	}
 
+	int currX = actor->getX(),
+		currY = actor->getY(),
+		newX = currX + actor->getSpeed() * horizontalPressed,
+		newY = currY + actor->getSpeed() * verticalPressed,
+		actorWidth = actor->getHitboxWidth() / 2,
+		actorHeight = actor->getHitboxHeight() / 2;
+
+	auto m = engine->getMap();
+	if (!m.areCoordinatesValid(newX - actorWidth, currY)) {
+		newX = actorWidth;
+	}
+	else if (!m.areCoordinatesValid(newX + actorWidth, currY)) {
+		newX = m.getWidth() - actorWidth;
+	}
+	if (!m.areCoordinatesValid(currX, newY - actorHeight)) {
+		newY = actorHeight;
+	}
+	else if (!m.areCoordinatesValid(currX, newY + actorHeight)) {
+		newY = m.getHeight() - actorHeight;
+	}
 	MoveCommand cmd = MoveCommand();
-	cmd.execute(
-		actor,
-		actor->getX() + actor->getSpeed() * horizontalPressed,
-		actor->getY() + actor->getSpeed() * verticalPressed
-	);
+	cmd.execute(actor, newX, newY);
 }
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {

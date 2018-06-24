@@ -9,7 +9,7 @@ class Map;
 
 class BehaviourPlayer : public Behaviour {
 	private:
-	void _updatePlayerPosition(Actor* actor);
+	void _updatePlayerPosition(Actor* actor, Engine* engine);
 	void _tryAttack(Actor* actor);
 
 	public:

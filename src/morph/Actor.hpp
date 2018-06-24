@@ -19,12 +19,6 @@ class ActorType;
 class Actor {
 	private:
 	int m_iHealth = 0;
-	int m_iMaxHealth = 0;
-	int m_iAttack = 0;
-
-	unsigned char m_cRed = 0;
-	unsigned char m_cGreen = 0;
-	unsigned char m_cBlue = 0;
 
 	ActorType &m_type;
 
@@ -52,19 +46,23 @@ class Actor {
 	int getAttack();
 	void setHealth(int health);
 	void setMaxHealth(int maxHealth);
-	void setAttack(int attack);
 
 	bool isDead();
 
 	void setX(int x);
 	void setY(int y);
-	void setColor(unsigned char red, unsigned char green, unsigned char blue);
+
 	int getX();
 	int getY();
 	int getSpeed();
 	unsigned char getRed();
 	unsigned char getGreen();
 	unsigned char getBlue();
+
+	int getWidth();
+	int getHeight();
+	int getHitboxWidth();
+	int getHitboxHeight();
 
 	void setLastTimeHit();
 	uint32_t getLastTimeHit();

@@ -13,9 +13,10 @@ ActorType::ActorType(S_ActorTypeData data) :
 
 std::shared_ptr<Actor> ActorType::createActor() {
 	std::shared_ptr<Actor> actor(std::make_shared<Actor>(*this));
-	actor->setHealth((int) m_data.health);
-	actor->setMaxHealth(m_data.health);
-	actor->setAttack(m_data.attack);
-	actor->setColor(m_data.red, m_data.green, m_data.blue);
+	actor->setHealth(actor->getMaxHealth());
 	return actor;
+}
+
+S_ActorTypeData& ActorType::getData() {
+	return m_data;
 }

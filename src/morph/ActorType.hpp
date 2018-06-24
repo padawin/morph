@@ -15,6 +15,7 @@ class ActorType {
 	public:
 	ActorType(S_ActorTypeData data);
 	std::shared_ptr<Actor> createActor();
+	S_ActorTypeData& getData();
 };
 
 #endif

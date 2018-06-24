@@ -40,15 +40,18 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 		actorWidth = actor->getHitboxWidth() / 2,
 		actorHeight = actor->getHitboxHeight() / 2;
 
-	if (!engine->getMap().areCoordinatesValid(newX - actorWidth, currY)
-		|| !engine->getMap().areCoordinatesValid(newX + actorWidth, currY)
-	) {
-		newX = currX;
+	auto m = engine->getMap();
+	if (!m.areCoordinatesValid(newX - actorWidth, currY)) {
+		newX = actorWidth;
 	}
-	if (!engine->getMap().areCoordinatesValid(currX, newY - actorHeight)
-		|| !engine->getMap().areCoordinatesValid(currX, newY + actorHeight)
-	) {
-		newY = currY;
+	else if (!m.areCoordinatesValid(newX + actorWidth, currY)) {
+		newX = m.getWidth() - actorWidth;
+	}
+	if (!m.areCoordinatesValid(currX, newY - actorHeight)) {
+		newY = actorHeight;
+	}
+	else if (!m.areCoordinatesValid(currX, newY + actorHeight)) {
+		newY = m.getHeight() - actorHeight;
 	}
 	MoveCommand cmd = MoveCommand();
 	cmd.execute(actor, newX, newY);

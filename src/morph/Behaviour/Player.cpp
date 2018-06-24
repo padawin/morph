@@ -36,11 +36,18 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 	int currX = actor->getX(),
 		currY = actor->getY(),
 		newX = currX + actor->getSpeed() * horizontalPressed,
-		newY = currY + actor->getSpeed() * verticalPressed;
-	if (!engine->getMap().areCoordinatesValid(newX, currY)) {
+		newY = currY + actor->getSpeed() * verticalPressed,
+		actorWidth = actor->getHitboxWidth() / 2,
+		actorHeight = actor->getHitboxHeight() / 2;
+
+	if (!engine->getMap().areCoordinatesValid(newX - actorWidth, currY)
+		|| !engine->getMap().areCoordinatesValid(newX + actorWidth, currY)
+	) {
 		newX = currX;
 	}
-	if (!engine->getMap().areCoordinatesValid(currX, newY)) {
+	if (!engine->getMap().areCoordinatesValid(currX, newY - actorHeight)
+		|| !engine->getMap().areCoordinatesValid(currX, newY + actorHeight)
+	) {
 		newY = currY;
 	}
 	MoveCommand cmd = MoveCommand();

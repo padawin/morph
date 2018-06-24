@@ -65,7 +65,9 @@ void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race) {
 		<< race.green << " "
 		<< race.blue << " "
 		<< race.width << " "
-		<< race.height << "\n";
+		<< race.height << " "
+		<< race.hitboxWidth << " "
+		<< race.hitboxHeight << "\n";
 }
 
 

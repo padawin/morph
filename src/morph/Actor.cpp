@@ -34,6 +34,8 @@ unsigned char Actor::getGreen() { return m_type.getData().green; }
 unsigned char Actor::getBlue() { return m_type.getData().blue; }
 int Actor::getWidth() { return m_type.getData().width; }
 int Actor::getHeight() { return m_type.getData().height; }
+int Actor::getHitboxWidth() { return m_type.getData().hitboxWidth; }
+int Actor::getHitboxHeight() { return m_type.getData().hitboxHeight; }
 ActorType &Actor::getType() { return m_type; }
 
 void Actor::setBehaviour(Behaviour* b) {

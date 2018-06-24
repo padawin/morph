@@ -55,15 +55,15 @@ std::string cleanFileInPath(std::string path) {
 bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data) {
 	int red, green, blue;
 	int result = sscanf(
-		line, "%d %d %d %d %d %d %d %d\n",
+		line, "%d %d %d %d %d %d %d %d %d %d\n",
 		&data.graphic, &data.health, &data.attack,
 		&red, &green, &blue,
-		&data.width, &data.height
+		&data.width, &data.height, &data.hitboxWidth, &data.hitboxHeight
 	);
 	data.red = (unsigned char) (red & 255);
 	data.green = (unsigned char) (green & 255);
 	data.blue = (unsigned char) (blue & 255);
-	if (result != 8) {
+	if (result != 10) {
 		return false;
 	}
 

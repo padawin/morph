@@ -16,11 +16,9 @@ Actor::Actor(ActorType &type) :
 }
 
 void Actor::setHealth(int health) { m_iHealth = health; }
-void Actor::setMaxHealth(int maxHealth) { m_iMaxHealth = maxHealth; }
-void Actor::setAttack(int attackValue) { m_iAttack = attackValue; }
 int Actor::getHealth() { return m_iHealth; }
-int Actor::getMaxHealth() { return m_iMaxHealth; }
-int Actor::getAttack() { return m_iAttack; }
+int Actor::getMaxHealth() { return m_type.getData().health; }
+int Actor::getAttack() { return m_type.getData().attack; }
 
 bool Actor::isDead() {
 	return m_iHealth == 0;
@@ -28,17 +26,12 @@ bool Actor::isDead() {
 
 void Actor::setX(int x) { m_iX = x; }
 void Actor::setY(int y) { m_iY = y; }
-void Actor::setColor(unsigned char red, unsigned char green, unsigned char blue) {
-	m_cRed = red;
-	m_cGreen = green;
-	m_cBlue = blue;
-}
 int Actor::getX() { return m_iX; }
 int Actor::getY() { return m_iY; }
 int Actor::getSpeed() { return m_iSpeed; }
-unsigned char Actor::getRed() { return m_cRed; }
-unsigned char Actor::getGreen() { return m_cGreen; }
-unsigned char Actor::getBlue() { return m_cBlue; }
+unsigned char Actor::getRed() { return m_type.getData().red; }
+unsigned char Actor::getGreen() { return m_type.getData().green; }
+unsigned char Actor::getBlue() { return m_type.getData().blue; }
 ActorType &Actor::getType() { return m_type; }
 
 void Actor::setBehaviour(Behaviour* b) {

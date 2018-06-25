@@ -79,6 +79,7 @@ void Engine::update() {
 
 	if (!m_hero->isDead()) {
 		m_map.clearDeadActors();
+		m_level.update(m_map);
 	}
 }
 

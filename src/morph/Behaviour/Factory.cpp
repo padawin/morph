@@ -15,6 +15,6 @@ BehaviourFactory::~BehaviourFactory() {
 	}
 }
 
-Behaviour *BehaviourFactory::getBehaviour(E_Behaviours behaviour) {
+Behaviour *BehaviourFactory::getBehaviour(long unsigned int behaviour) {
 	return m_vBehaviours[behaviour];
 }

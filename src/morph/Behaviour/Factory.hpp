@@ -14,7 +14,7 @@ class BehaviourFactory {
 	public:
 	BehaviourFactory();
 	~BehaviourFactory();
-	Behaviour *getBehaviour(E_Behaviours behaviour);
+	Behaviour *getBehaviour(long unsigned int behaviour);
 
 };
 

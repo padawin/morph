@@ -11,10 +11,14 @@ ActorType::ActorType(S_ActorTypeData data) :
 {
 }
 
-std::shared_ptr<Actor> ActorType::createActor(GraphicFactory& graphicFactory) {
+std::shared_ptr<Actor> ActorType::createActor(
+	GraphicFactory& graphicFactory,
+	BehaviourFactory& behaviourFactory
+) {
 	std::shared_ptr<Actor> actor(std::make_shared<Actor>(*this));
 	actor->setHealth(actor->getMaxHealth());
 	actor->setGraphic(graphicFactory.getGraphicActor(m_data.graphic));
+	actor->setBehaviour(behaviourFactory.getBehaviour(m_data.behaviour));
 	return actor;
 }
 

@@ -31,7 +31,7 @@ std::shared_ptr<Actor> ActorFactory::createActor(E_ActorTypes type) {
 		return NULL;
 	}
 
-	return m_mTaxonomy[type].createActor(m_graphicFactory);
+	return m_mTaxonomy[type].createActor(m_graphicFactory, m_behaviourFactory);
 }
 
 std::shared_ptr<Actor> ActorFactory::createEnemy(E_ActorTypes type) {
@@ -41,6 +41,5 @@ std::shared_ptr<Actor> ActorFactory::createEnemy(E_ActorTypes type) {
 
 std::shared_ptr<Actor> ActorFactory::createHero() {
 	std::shared_ptr<Actor> hero = createActor(TYPE_PLAYER);
-	hero->setBehaviour(m_behaviourFactory.getBehaviour(BEHAVIOUR_PLAYER));
 	return hero;
 }

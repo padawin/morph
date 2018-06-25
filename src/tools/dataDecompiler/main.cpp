@@ -63,6 +63,7 @@ std::string cleanFileInPath(std::string path) {
 void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData actorType) {
 	fileOutStream <<
 		actorType.graphic << " "
+		<< actorType.behaviour << " "
 		<< actorType.health << " "
 		<< actorType.attack << " "
 		<< actorType.speed << " "

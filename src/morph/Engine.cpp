@@ -13,6 +13,7 @@ Engine::Engine() :
 	m_graphicFactory(GraphicFactory()),
 	m_actorFactory(ActorFactory(m_graphicFactory)),
 	m_map(Map()),
+	m_level(Level(m_actorFactory)),
 	m_mapRenderer(MapRenderer(m_map, m_graphicFactory)),
 	m_camera()
 {
@@ -42,6 +43,19 @@ bool Engine::loadTaxonomy(std::string filePath) {
 	}
 	else {
 		std::cout << "error parsing taxonomy" << std::endl;
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool Engine::loadLevels(std::string filePath) {
+	bool ret = true;
+	if (m_level.parseLevels(filePath.c_str())) {
+		std::cout << "Levels parsed\n";
+	}
+	else {
+		std::cout << "error parsing levels" << std::endl;
 		ret = false;
 	}
 

@@ -1,9 +1,11 @@
 #include "Behaviour/Factory.hpp"
 #include "Behaviour/Player.hpp"
+#include "Behaviour/EnemySquare.hpp"
 
 BehaviourFactory::BehaviourFactory() {
 	m_vBehaviours = {
-		new BehaviourPlayer()
+		new BehaviourPlayer(),
+		new BehaviourEnemySquare()
 	};
 }
 

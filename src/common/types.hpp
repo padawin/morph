@@ -17,9 +17,9 @@ struct S_ActorTypeData {
 };
 
 struct S_LevelData {
-	int enemyCount;
-	int maxSimultaneousEnemies;
-	int difficulty;
+	int enemyCount = 0;
+	int maxSimultaneousEnemies = 0;
+	int difficulty = 0;
 };
 
 typedef std::pair<int, int> t_coordinates;

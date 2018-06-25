@@ -3,14 +3,6 @@
 
 #include <memory>
 #include <vector>
-/*
-#include <stdint.h>
-#include <unordered_map>
-#include "Terrain.hpp"
-#include "types.hpp"
-#include "GUI/Factory.hpp"
-#include "ResourceManager.hpp"
-*/
 #include "SDL2_framework/Vector2D.h"
 
 class Actor;

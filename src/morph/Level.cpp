@@ -9,7 +9,7 @@ void Level::update(Map& m) {
 	if ((signed) m.getActors().size() < currentLevel.maxSimultaneousEnemies + 1) {
 		int generateEnemy = rand() % 1000;
 		if (generateEnemy > 700) {
-			m.addActor(m_actorFactory.createEnemy(TYPE_GREEN_SQUARE));
+			m.addActor(m_actorFactory.createActor(TYPE_GREEN_SQUARE));
 		}
 	}
 }

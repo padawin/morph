@@ -6,6 +6,7 @@
 
 std::string cleanFileInPath(std::string path);
 void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race);
+void writeLevel(std::ofstream &fileOutStream, S_LevelData level);
 template <typename T>
 bool decompileFile(
 	ResourceManager<T> *resourceManager,
@@ -32,6 +33,9 @@ int main(int argc, char* argv[]) {
 	bool ret;
 	if (type == "actors") {
 		ret = decompileFile(new ResourceManager<S_ActorTypeData>(), writeActorType, fileIn, fileOut);
+	}
+	else if (type == "levels") {
+		ret = decompileFile(new ResourceManager<S_LevelData>(), writeLevel, fileIn, fileOut);
 	}
 	else {
 		std::cerr << "Invalid type: " << type << "\n";
@@ -68,6 +72,13 @@ void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race) {
 		<< race.height << " "
 		<< race.hitboxWidth << " "
 		<< race.hitboxHeight << "\n";
+}
+
+void writeLevel(std::ofstream &fileOutStream, S_LevelData level) {
+	fileOutStream <<
+		level.enemyCount << " "
+		<< level.maxSimultaneousEnemies << " "
+		<< level.difficulty << "\n";
 }
 
 

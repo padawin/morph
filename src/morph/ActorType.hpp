@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "GUI/Factory.hpp"
 
 class Actor;
 
@@ -14,7 +15,7 @@ class ActorType {
 
 	public:
 	ActorType(S_ActorTypeData data);
-	std::shared_ptr<Actor> createActor();
+	std::shared_ptr<Actor> createActor(GraphicFactory& graphicFactory);
 	S_ActorTypeData& getData();
 };
 

@@ -14,6 +14,12 @@ struct S_ActorTypeData {
 	int hitboxHeight;
 };
 
+struct S_LevelData {
+	int enemyCount;
+	int maxSimultaneousEnemies;
+	int difficulty;
+};
+
 typedef std::pair<int, int> t_coordinates;
 
 #endif

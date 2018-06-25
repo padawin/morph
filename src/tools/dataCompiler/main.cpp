@@ -6,6 +6,7 @@
 
 std::string cleanFileInPath(std::string path);
 bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data);
+bool readLevelLine(char line[MAX_CHARS_PER_LINE], S_LevelData &data);
 
 int main(int argc, char* argv[]) {
 	// expects the following arguments:
@@ -25,6 +26,13 @@ int main(int argc, char* argv[]) {
 	if (type == "actors") {
 		ResourceManager<S_ActorTypeData> resourceManager;
 		bool res = resourceManager.compileFile(fileIn, fileOut, readActorTypeLine);
+		if (!res) {
+			return 1;
+		}
+	}
+	else if (type == "levels") {
+		ResourceManager<S_LevelData> resourceManager;
+		bool res = resourceManager.compileFile(fileIn, fileOut, readLevelLine);
 		if (!res) {
 			return 1;
 		}
@@ -64,6 +72,18 @@ bool readActorTypeLine(char line[MAX_CHARS_PER_LINE], S_ActorTypeData &data) {
 	data.green = (unsigned char) (green & 255);
 	data.blue = (unsigned char) (blue & 255);
 	if (result != 10) {
+		return false;
+	}
+
+	return true;
+}
+
+bool readLevelLine(char line[MAX_CHARS_PER_LINE], S_LevelData &data) {
+	int result = sscanf(
+		line, "%d %d %d\n",
+		&data.enemyCount, &data.maxSimultaneousEnemies, &data.difficulty
+	);
+	if (result != 3) {
 		return false;
 	}
 

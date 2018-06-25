@@ -13,6 +13,7 @@ Engine::Engine() :
 	m_graphicFactory(GraphicFactory()),
 	m_actorFactory(ActorFactory(m_graphicFactory)),
 	m_map(Map()),
+	m_level(Level(m_actorFactory)),
 	m_mapRenderer(MapRenderer(m_map, m_graphicFactory)),
 	m_camera()
 {
@@ -48,6 +49,19 @@ bool Engine::loadTaxonomy(std::string filePath) {
 	return ret;
 }
 
+bool Engine::loadLevels(std::string filePath) {
+	bool ret = true;
+	if (m_level.parseLevels(filePath.c_str())) {
+		std::cout << "Levels parsed\n";
+	}
+	else {
+		std::cout << "error parsing levels" << std::endl;
+		ret = false;
+	}
+
+	return ret;
+}
+
 void Engine::initialiseHero() {
 	m_hero = m_actorFactory.createHero();
 	m_hero->setX(m_map.getWidth() / 2);
@@ -65,6 +79,7 @@ void Engine::update() {
 
 	if (!m_hero->isDead()) {
 		m_map.clearDeadActors();
+		m_level.update(m_map);
 	}
 }
 

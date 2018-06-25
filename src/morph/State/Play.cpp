@@ -35,6 +35,9 @@ bool PlayState::onEnter() {
 	ret &= engine.loadTaxonomy(
 		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"
 	);
+	ret &= engine.loadLevels(
+		Game::Instance()->getBinaryPath() + "/../resources/levels.dat"
+	);
 	if (ret) {
 		engine.initialiseHero();
 	}

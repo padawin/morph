@@ -1,8 +1,10 @@
 #ifndef __TYPES__
 #define __TYPES__
 
+#include <utility>
+
 struct S_ActorTypeData {
-	int graphic;
+	long unsigned graphic;
 	int health;
 	int attack;
 	unsigned char red;
@@ -15,9 +17,9 @@ struct S_ActorTypeData {
 };
 
 struct S_LevelData {
-	int enemyCount;
-	int maxSimultaneousEnemies;
-	int difficulty;
+	int enemyCount = 0;
+	int maxSimultaneousEnemies = 0;
+	int difficulty = 0;
 };
 
 typedef std::pair<int, int> t_coordinates;

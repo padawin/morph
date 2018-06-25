@@ -31,18 +31,16 @@ std::shared_ptr<Actor> ActorFactory::createActor(E_ActorTypes type) {
 		return NULL;
 	}
 
-	return m_mTaxonomy[type].createActor();
+	return m_mTaxonomy[type].createActor(m_graphicFactory);
 }
 
 std::shared_ptr<Actor> ActorFactory::createEnemy(E_ActorTypes type) {
 	std::shared_ptr<Actor> actor = createActor(type);
-	actor->setGraphic(m_graphicFactory.getGraphicActor(GRAPHIC_ACTOR_SQUARE));
 	return actor;
 }
 
 std::shared_ptr<Actor> ActorFactory::createHero() {
 	std::shared_ptr<Actor> hero = createActor(TYPE_PLAYER);
 	hero->setBehaviour(m_behaviourFactory.getBehaviour(BEHAVIOUR_PLAYER));
-	hero->setGraphic(m_graphicFactory.getGraphicActor(GRAPHIC_ACTOR_SQUARE));
 	return hero;
 }

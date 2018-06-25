@@ -1,6 +1,8 @@
 #ifndef __TYPES__
 #define __TYPES__
 
+#include <utility>
+
 struct S_ActorTypeData {
 	int graphic;
 	int health;

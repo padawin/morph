@@ -5,7 +5,7 @@
 #include "ResourceManager.hpp"
 
 std::string cleanFileInPath(std::string path);
-void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race);
+void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData actorType);
 void writeLevel(std::ofstream &fileOutStream, S_LevelData level);
 template <typename T>
 bool decompileFile(
@@ -60,19 +60,20 @@ std::string cleanFileInPath(std::string path) {
 	}
 }
 
-void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData race) {
+void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData actorType) {
 	fileOutStream <<
-		race.graphic << " "
-		<< race.health << " "
-		<< race.attack << " "
-		<< race.red << " "
-		<< race.green << " "
-		<< race.blue << " "
-		<< race.width << " "
-		<< race.height << " "
-		<< race.hitboxWidth << " "
-		<< race.hitboxHeight << "\n";
+		actorType.graphic << " "
+		<< actorType.health << " "
+		<< actorType.attack << " "
+		<< actorType.red << " "
+		<< actorType.green << " "
+		<< actorType.blue << " "
+		<< actorType.width << " "
+		<< actorType.height << " "
+		<< actorType.hitboxWidth << " "
+		<< actorType.hitboxHeight << "\n";
 }
+
 
 void writeLevel(std::ofstream &fileOutStream, S_LevelData level) {
 	fileOutStream <<

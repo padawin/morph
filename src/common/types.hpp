@@ -4,7 +4,7 @@
 #include <utility>
 
 struct S_ActorTypeData {
-	int graphic;
+	long unsigned graphic;
 	int health;
 	int attack;
 	unsigned char red;

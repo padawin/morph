@@ -4,7 +4,6 @@
 #include "Behaviour/Behaviour.hpp"
 #include "GUI/Actor.hpp"
 #include <limits.h>
-#include <SDL2/SDL.h>
 
 #define LIMIT_FIELD_OF_VIEW 6
 
@@ -80,6 +79,10 @@ void Actor::attack(int attack) {
 	}
 
 	m_iAttackDuration[attack] = 100;
+}
+
+std::vector<SDL_Rect> Actor::getAttacks() {
+	return m_graphic->getAttacks(this);
 }
 
 int Actor::getAttackProgress(int attack) {

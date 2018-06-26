@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <string>
+#include <vector>
+#include "SDL2/SDL.h"
 
 #define ATTACK_UP 0
 #define ATTACK_RIGHT 1
@@ -69,6 +71,7 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attack);
+	std::vector<SDL_Rect> getAttacks();
 	int getAttackProgress(int attack);
 };
 

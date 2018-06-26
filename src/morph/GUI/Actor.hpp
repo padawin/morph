@@ -15,6 +15,7 @@ class GraphicActor : public Graphic {
 		Actor *actor
 	) = 0;
 	virtual std::map<int, SDL_Rect> getAttacks(Actor* actor, bool full = false) = 0;
+	virtual int canTouch(Actor* actor1, Actor* actor2) = 0;
 };
 
 #endif

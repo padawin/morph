@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
+#include "Physics.hpp"
 
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
@@ -103,4 +104,13 @@ void GraphicActorSquare::_renderAttack(
 	Game* game = Game::Instance();
 	SDL_SetRenderDrawColor(game->getRenderer(), red, green, blue, 0);
 	SDL_RenderFillRect(game->getRenderer(), &r);
+}
+
+int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
+	for (auto const& it : getAttacks(actor1, true)) {
+		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
+			return it.first;
+		}
+	}
+	return -1;
 }

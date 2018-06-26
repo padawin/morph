@@ -78,6 +78,8 @@ class Actor {
 
 	bool hasInvincibilityFrame();
 	void setInvincibilityFrame();
+
+	int canTouch(Actor* actor);
 };
 
 #endif

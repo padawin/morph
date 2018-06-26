@@ -108,3 +108,7 @@ bool Actor::hasInvincibilityFrame() {
 void Actor::setInvincibilityFrame() {
 	m_iInvincibilityFrame = INVINCIBILITY_FRAME;
 }
+
+int Actor::canTouch(Actor* actor) {
+	return m_graphic->canTouch(this, actor);
+}

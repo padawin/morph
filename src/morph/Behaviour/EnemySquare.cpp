@@ -24,6 +24,12 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 	else if (playerIsHit) {
 		player->setHealth(player->getHealth() - actor->getAttack());
 	}
+	else {
+		int direction = actor->canTouch(player.get());
+		if (direction != -1) {
+			actor->attack(direction);
+		}
+	}
 	// if player's attack is touching the actor
 	//		remove health
 	// else if is attacking and touching player

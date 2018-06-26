@@ -43,8 +43,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		baseX = actor->getX(),
 		baseY = actor->getY(),
 		actorWidth = actor->getWidth(),
-		actorHeight = actor->getHeight(),
-		attackWidth = actorWidth;
+		actorHeight = actor->getHeight();
 	int attackLength;
 	std::map<int, SDL_Rect> attacks;
 	if (attackUp) {
@@ -52,7 +51,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		SDL_Rect r;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY - actorHeight / 2 - attackLength;
-		r.w = attackWidth;
+		r.w = actorWidth;
 		r.h = attackLength;
 		attacks[ATTACK_UP] = r;
 	}
@@ -62,7 +61,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		r.x = baseX + actorWidth / 2;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;
-		r.h = attackWidth;
+		r.h = actorHeight;
 		attacks[ATTACK_RIGHT] = r;
 	}
 	if (attackDown) {
@@ -70,7 +69,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		SDL_Rect r;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY + actorHeight / 2;
-		r.w = attackWidth;
+		r.w = actorWidth;
 		r.h = attackLength;
 		attacks[ATTACK_DOWN] = r;
 	}
@@ -80,7 +79,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		r.x = baseX - actorWidth / 2 - attackLength;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;
-		r.h = attackWidth;
+		r.h = actorHeight;
 		attacks[ATTACK_LEFT] = r;
 	}
 

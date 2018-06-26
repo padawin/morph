@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <vector>
+#include <map>
 #include "SDL2/SDL.h"
 
 #define ATTACK_UP 0
@@ -73,7 +73,7 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attack);
-	std::vector<SDL_Rect> getAttacks();
+	std::map<int, SDL_Rect> getAttacks();
 	int getAttackProgress(int attack);
 
 	bool hasInvincibilityFrame();

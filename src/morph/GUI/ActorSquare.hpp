@@ -19,7 +19,7 @@ class GraphicActorSquare : public GraphicActor {
 		int displayShiftY,
 		Actor *actor
 	);
-	std::vector<SDL_Rect> getAttacks(Actor* actor);
+	std::map<int, SDL_Rect> getAttacks(Actor* actor);
 };
 
 #endif

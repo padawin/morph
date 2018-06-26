@@ -93,7 +93,7 @@ void Actor::attack(int attack) {
 	m_iAttackDuration[attack] = 100;
 }
 
-std::vector<SDL_Rect> Actor::getAttacks() {
+std::map<int, SDL_Rect> Actor::getAttacks() {
 	return m_graphic->getAttacks(this);
 }
 

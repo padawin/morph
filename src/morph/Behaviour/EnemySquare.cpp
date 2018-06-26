@@ -6,13 +6,13 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 	std::shared_ptr<Actor> player = engine->getHero();
 	bool playerIsHit = false,
 		 actorIsHit = false;
-	for (SDL_Rect attack : player->getAttacks()) {
-		if (physics::areRectIntersecting(attack, actor->getHitbox())&& !actor->hasInvincibilityFrame()) {
+	for (auto const& attack : player->getAttacks()) {
+		if (physics::areRectIntersecting(attack.second, actor->getHitbox())&& !actor->hasInvincibilityFrame()) {
 			actorIsHit = true;
 		}
 	}
-	for (SDL_Rect attack : actor->getAttacks()) {
-		if (physics::areRectIntersecting(attack, player->getHitbox())) {
+	for (auto const& attack : actor->getAttacks()) {
+		if (physics::areRectIntersecting(attack.second, player->getHitbox())) {
 			playerIsHit = true;
 		}
 	}

@@ -7,7 +7,7 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 	bool playerIsHit = false,
 		 actorIsHit = false;
 	for (SDL_Rect attack : player->getAttacks()) {
-		if (physics::areRectIntersecting(attack, actor->getHitbox())) {
+		if (physics::areRectIntersecting(attack, actor->getHitbox())&& !actor->hasInvincibilityFrame()) {
 			actorIsHit = true;
 		}
 	}
@@ -19,6 +19,7 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 
 	if (actorIsHit) {
 		actor->setHealth(actor->getHealth() - player->getAttack());
+		actor->setInvincibilityFrame();
 	}
 	else if (playerIsHit) {
 		player->setHealth(player->getHealth() - actor->getAttack());

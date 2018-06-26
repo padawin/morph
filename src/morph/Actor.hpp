@@ -27,6 +27,7 @@ class Actor {
 	int m_iY = 0;
 
 	int m_iAttackDuration[4] = {0, 0, 0, 0};
+	int m_iInvincibilityFrame = 0;
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;
@@ -74,6 +75,9 @@ class Actor {
 	void attack(int attack);
 	std::vector<SDL_Rect> getAttacks();
 	int getAttackProgress(int attack);
+
+	bool hasInvincibilityFrame();
+	void setInvincibilityFrame();
 };
 
 #endif

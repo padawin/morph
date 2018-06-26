@@ -6,6 +6,7 @@
 #include <limits.h>
 
 #define LIMIT_FIELD_OF_VIEW 6
+#define INVINCIBILITY_FRAME 10
 
 Actor::Actor(ActorType &type) :
 	m_type(type),
@@ -73,6 +74,9 @@ void Actor::update(Engine *engine) {
 			m_iAttackDuration[attack] = 0;
 		}
 	}
+	if (m_iInvincibilityFrame > 0) {
+		--m_iInvincibilityFrame;
+	}
 }
 
 void Actor::render(int displayShiftX, int displayShiftY) {
@@ -95,4 +99,12 @@ std::vector<SDL_Rect> Actor::getAttacks() {
 
 int Actor::getAttackProgress(int attack) {
 	return m_iAttackDuration[attack];
+}
+
+bool Actor::hasInvincibilityFrame() {
+	return m_iInvincibilityFrame > 0;
+}
+
+void Actor::setInvincibilityFrame() {
+	m_iInvincibilityFrame = INVINCIBILITY_FRAME;
 }

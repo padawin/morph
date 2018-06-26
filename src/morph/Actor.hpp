@@ -63,6 +63,7 @@ class Actor {
 	int getHeight();
 	int getHitboxWidth();
 	int getHitboxHeight();
+	SDL_Rect getHitbox();
 
 	void setLastTimeHit();
 	uint32_t getLastTimeHit();

@@ -35,6 +35,14 @@ int Actor::getWidth() { return m_type.getData().width; }
 int Actor::getHeight() { return m_type.getData().height; }
 int Actor::getHitboxWidth() { return m_type.getData().hitboxWidth; }
 int Actor::getHitboxHeight() { return m_type.getData().hitboxHeight; }
+SDL_Rect Actor::getHitbox() {
+	SDL_Rect hitbox;
+	hitbox.x = m_iX - getHitboxWidth() / 2;
+	hitbox.y = m_iY - getHitboxHeight() / 2;
+	hitbox.w = getHitboxWidth();
+	hitbox.h = getHitboxHeight();
+	return hitbox;
+}
 ActorType &Actor::getType() { return m_type; }
 
 void Actor::setBehaviour(Behaviour* b) {

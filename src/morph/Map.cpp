@@ -15,16 +15,16 @@ void Map::clear() {
 }
 
 void Map::clearDeadActors() {
-	/*
+	long unsigned i = 0;
 	for (auto it = m_vActors.begin(); it != m_vActors.end();) {
-		if (it->isDead()) {
+		if (m_vActors[i]->isDead()) {
 			it = m_vActors.erase(it);
 		}
 		else {
 			++it;
+			++i;
 		}
 	}
-	*/
 }
 
 void Map::setStartPoint(float x, float y) {

@@ -14,7 +14,7 @@ class GraphicActor : public Graphic {
 		int displayShiftY,
 		Actor *actor
 	) = 0;
-	virtual std::map<int, SDL_Rect> getAttacks(Actor* actor) = 0;
+	virtual std::map<int, SDL_Rect> getAttacks(Actor* actor, bool full = false) = 0;
 };
 
 #endif

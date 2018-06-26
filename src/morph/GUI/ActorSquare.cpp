@@ -33,7 +33,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	}
 }
 
-std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
+std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
 	const int attackUp = actor->getAttackProgress(ATTACK_UP),
 		attackRight = actor->getAttackProgress(ATTACK_RIGHT),
 		attackDown = actor->getAttackProgress(ATTACK_DOWN),
@@ -44,10 +44,12 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		baseY = actor->getY(),
 		actorWidth = actor->getWidth(),
 		actorHeight = actor->getHeight();
-	int attackLength;
+	int attackLength = maxLengthAttack;
 	std::map<int, SDL_Rect> attacks;
-	if (attackUp) {
-		attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
+	if (full || attackUp) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
+		}
 		SDL_Rect r;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY - actorHeight / 2 - attackLength;
@@ -55,8 +57,10 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		r.h = attackLength;
 		attacks[ATTACK_UP] = r;
 	}
-	if (attackRight) {
-		attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
+	if (full || attackRight) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
+		}
 		SDL_Rect r;
 		r.x = baseX + actorWidth / 2;
 		r.y = baseY - actorHeight / 2;
@@ -64,8 +68,10 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		r.h = actorHeight;
 		attacks[ATTACK_RIGHT] = r;
 	}
-	if (attackDown) {
-		attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
+	if (full || attackDown) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
+		}
 		SDL_Rect r;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY + actorHeight / 2;
@@ -73,8 +79,10 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor) {
 		r.h = attackLength;
 		attacks[ATTACK_DOWN] = r;
 	}
-	if (attackLeft) {
-		attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
+	if (full || attackLeft) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
+		}
 		SDL_Rect r;
 		r.x = baseX - actorWidth / 2 - attackLength;
 		r.y = baseY - actorHeight / 2;

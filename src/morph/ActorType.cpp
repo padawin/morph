@@ -1,10 +1,5 @@
-#include <SDL2/SDL.h>
-#include <sstream>
-#include <string>
 #include "ActorType.hpp"
 #include "Actor.hpp"
-#include "SDL2_framework/TextureManager.h"
-#include "SDL2_framework/Game.h"
 
 ActorType::ActorType(S_ActorTypeData data) :
 	m_data(data)

@@ -2,7 +2,6 @@
 #define __GUI_ACTOR_SQUARE__
 
 #include "Actor.hpp"
-#include <SDL2/SDL.h>
 
 class GraphicActorSquare : public GraphicActor {
 	private:
@@ -20,6 +19,7 @@ class GraphicActorSquare : public GraphicActor {
 		int displayShiftY,
 		Actor *actor
 	);
+	std::vector<SDL_Rect> getAttacks(Actor* actor);
 };
 
 #endif

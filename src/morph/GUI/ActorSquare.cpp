@@ -22,10 +22,10 @@ void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *act
 }
 
 void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) {
-	const int attackUp = actor->getAttackDuration(ATTACK_UP),
-		attackRight = actor->getAttackDuration(ATTACK_RIGHT),
-		attackDown = actor->getAttackDuration(ATTACK_DOWN),
-		attackLeft = actor->getAttackDuration(ATTACK_LEFT),
+	const int attackUp = actor->getAttackProgress(ATTACK_UP),
+		attackRight = actor->getAttackProgress(ATTACK_RIGHT),
+		attackDown = actor->getAttackProgress(ATTACK_DOWN),
+		attackLeft = actor->getAttackProgress(ATTACK_LEFT),
 		maxLengthAttack = 20,
 		// Center of the actor on the screen coords
 		baseX = actor->getX() + displayShiftX,
@@ -39,7 +39,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	int attackLength = attackUp * maxLengthAttack / DURATION_ATTACK;
 	SDL_Rect r;
 	if (attackUp) {
-		attackLength = attackUp * maxLengthAttack / DURATION_ATTACK,
+		attackLength = (attackUp * maxLengthAttack) / 100;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY - actorHeight / 2 - attackLength;
 		r.w = attackWidth;
@@ -47,7 +47,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackRight) {
-		attackLength = attackRight * maxLengthAttack / DURATION_ATTACK,
+		attackLength = (attackRight * maxLengthAttack) / 100,
 		r.x = baseX + actorWidth / 2;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;
@@ -55,7 +55,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackDown) {
-		attackLength = attackDown * maxLengthAttack / DURATION_ATTACK,
+		attackLength = (attackDown * maxLengthAttack) / 100,
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY + actorHeight / 2;
 		r.w = attackWidth;
@@ -63,7 +63,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackLeft) {
-		attackLength = attackLeft * maxLengthAttack / DURATION_ATTACK,
+		attackLength = (attackLeft * maxLengthAttack) / 100,
 		r.x = baseX - actorWidth / 2 - attackLength;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;

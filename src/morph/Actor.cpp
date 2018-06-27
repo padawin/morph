@@ -76,9 +76,9 @@ void Actor::attack(int attack) {
 		return;
 	}
 
-	m_iAttackDuration[attack] = DURATION_ATTACK;
+	m_iAttackDuration[attack] = 100;
 }
 
-int Actor::getAttackDuration(int attack) {
+int Actor::getAttackProgress(int attack) {
 	return m_iAttackDuration[attack];
 }

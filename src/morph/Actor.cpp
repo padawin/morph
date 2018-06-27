@@ -28,7 +28,7 @@ void Actor::setX(int x) { m_iX = x; }
 void Actor::setY(int y) { m_iY = y; }
 int Actor::getX() { return m_iX; }
 int Actor::getY() { return m_iY; }
-int Actor::getSpeed() { return m_iSpeed; }
+int Actor::getSpeed() { return m_type.getData().speed; }
 unsigned char Actor::getRed() { return m_type.getData().red; }
 unsigned char Actor::getGreen() { return m_type.getData().green; }
 unsigned char Actor::getBlue() { return m_type.getData().blue; }

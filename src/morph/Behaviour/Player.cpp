@@ -35,8 +35,8 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 
 	int currX = actor->getX(),
 		currY = actor->getY(),
-		newX = currX + actor->getSpeed() * horizontalPressed,
-		newY = currY + actor->getSpeed() * verticalPressed,
+		newX = currX + actor->getSpeed() / 2 * horizontalPressed,
+		newY = currY + actor->getSpeed() / 2 * verticalPressed,
 		actorWidth = actor->getHitboxWidth() / 2,
 		actorHeight = actor->getHitboxHeight() / 2;
 

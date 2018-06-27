@@ -24,7 +24,6 @@ class Actor {
 
 	int m_iX = 0;
 	int m_iY = 0;
-	int m_iSpeed = 2;
 
 	char m_iAttackDuration[4] = {0, 0, 0, 0};
 

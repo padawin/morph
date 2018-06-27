@@ -7,6 +7,7 @@ struct S_ActorTypeData {
 	long unsigned graphic;
 	int health;
 	int attack;
+	int speed;
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;

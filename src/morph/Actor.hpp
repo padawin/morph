@@ -25,7 +25,7 @@ class Actor {
 	int m_iX = 0;
 	int m_iY = 0;
 
-	char m_iAttackDuration[4] = {0, 0, 0, 0};
+	int m_iAttackDuration[4] = {0, 0, 0, 0};
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;

@@ -39,7 +39,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	int attackLength;
 	SDL_Rect r;
 	if (attackUp) {
-		attackLength = (attackUp * maxLengthAttack) / 100;
+		attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY - actorHeight / 2 - attackLength;
 		r.w = attackWidth;
@@ -47,7 +47,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackRight) {
-		attackLength = (attackRight * maxLengthAttack) / 100,
+		attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100,
 		r.x = baseX + actorWidth / 2;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;
@@ -55,7 +55,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackDown) {
-		attackLength = (attackDown * maxLengthAttack) / 100,
+		attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100,
 		r.x = baseX - actorWidth / 2;
 		r.y = baseY + actorHeight / 2;
 		r.w = attackWidth;
@@ -63,7 +63,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 		_renderAttack(r, red, green, blue);
 	}
 	if (attackLeft) {
-		attackLength = (attackLeft * maxLengthAttack) / 100,
+		attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100,
 		r.x = baseX - actorWidth / 2 - attackLength;
 		r.y = baseY - actorHeight / 2;
 		r.w = attackLength;

@@ -36,7 +36,7 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	const unsigned char red = actor->getRed(),
 		green = actor->getGreen(),
 		blue = actor->getBlue();
-	int attackLength = attackUp * maxLengthAttack / DURATION_ATTACK;
+	int attackLength;
 	SDL_Rect r;
 	if (attackUp) {
 		attackLength = (attackUp * maxLengthAttack) / 100;

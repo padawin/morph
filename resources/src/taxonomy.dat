@@ -1,10 +1,10 @@
 # format:
-# graphic health attack red green blue width height hitbox_width hitbox_height
+# graphic health attack speed red green blue width height hitbox_width hitbox_height
 # player
-0 10 3 255 255 255 16 16 16 16
+0 10 3 6 255 255 255 16 16 16 16
 # green square
-0 2 2 0 255 0 16 16 16 16
+0 2 2 2 0 255 0 16 16 16 16
 # blue square
-0 7 5 0 0 255 16 16 16 16
+0 7 5 3 0 0 255 16 16 16 16
 # red square
-0 12 8 255 0 0 16 16 16 16
+0 12 8 5 255 0 0 16 16 16 16

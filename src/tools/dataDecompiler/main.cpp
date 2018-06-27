@@ -65,6 +65,7 @@ void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData actorType) {
 		actorType.graphic << " "
 		<< actorType.health << " "
 		<< actorType.attack << " "
+		<< actorType.speed << " "
 		<< actorType.red << " "
 		<< actorType.green << " "
 		<< actorType.blue << " "

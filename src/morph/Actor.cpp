@@ -60,7 +60,10 @@ void Actor::update(Engine *engine) {
 	}
 	for (int attack = 0; attack < 4; ++attack) {
 		if (m_iAttackDuration[attack] > 0) {
-			--m_iAttackDuration[attack];
+			m_iAttackDuration[attack] -= getSpeed();
+		}
+		else {
+			m_iAttackDuration[attack] = 0;
 		}
 	}
 }
@@ -76,9 +79,9 @@ void Actor::attack(int attack) {
 		return;
 	}
 
-	m_iAttackDuration[attack] = DURATION_ATTACK;
+	m_iAttackDuration[attack] = 100;
 }
 
-int Actor::getAttackDuration(int attack) {
+int Actor::getAttackProgress(int attack) {
 	return m_iAttackDuration[attack];
 }

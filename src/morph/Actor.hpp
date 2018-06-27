@@ -8,7 +8,6 @@
 #define ATTACK_RIGHT 1
 #define ATTACK_DOWN 2
 #define ATTACK_LEFT 3
-#define DURATION_ATTACK 10
 
 class Behaviour;
 class GraphicActor;
@@ -25,7 +24,7 @@ class Actor {
 	int m_iX = 0;
 	int m_iY = 0;
 
-	char m_iAttackDuration[4] = {0, 0, 0, 0};
+	int m_iAttackDuration[4] = {0, 0, 0, 0};
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;
@@ -70,7 +69,7 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attack);
-	int getAttackDuration(int attack);
+	int getAttackProgress(int attack);
 };
 
 #endif

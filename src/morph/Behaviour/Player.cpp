@@ -11,32 +11,25 @@ bool BehaviourPlayer::update(Engine* engine, Actor* actor) {
 }
 
 void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
-	char verticalPressed = 0;
-	char horizontalPressed = 0;
+	Vector2D direction;
 	UserActions* userActions = ServiceProvider::getUserActions();
 	if (userActions->getActionState("MOVE_PLAYER_UP")) {
-		verticalPressed = -1;
+		direction.setY(-1);
 	}
 	else if (userActions->getActionState("MOVE_PLAYER_DOWN")) {
-		verticalPressed = 1;
-	}
-	else {
-		verticalPressed = 0;
+		direction.setY(1);
 	}
 	if (userActions->getActionState("MOVE_PLAYER_LEFT")) {
-		horizontalPressed = -1;
+		direction.setX(-1);
 	}
 	else if (userActions->getActionState("MOVE_PLAYER_RIGHT")) {
-		horizontalPressed = 1;
-	}
-	else {
-		horizontalPressed = 0;
+		direction.setX(1);
 	}
 
 	int currX = actor->getX(),
 		currY = actor->getY(),
-		newX = currX + actor->getSpeed() / 2 * horizontalPressed,
-		newY = currY + actor->getSpeed() / 2 * verticalPressed,
+		newX = currX + actor->getSpeed() / 2 * direction.getX(),
+		newY = currY + actor->getSpeed() / 2 * direction.getY(),
 		actorWidth = actor->getHitboxWidth() / 2,
 		actorHeight = actor->getHitboxHeight() / 2;
 

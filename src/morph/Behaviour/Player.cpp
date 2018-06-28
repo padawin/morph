@@ -11,50 +11,24 @@ bool BehaviourPlayer::update(Engine* engine, Actor* actor) {
 }
 
 void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
-	char verticalPressed = 0;
-	char horizontalPressed = 0;
+	Vector2D direction;
 	UserActions* userActions = ServiceProvider::getUserActions();
 	if (userActions->getActionState("MOVE_PLAYER_UP")) {
-		verticalPressed = -1;
+		direction.setY(-1);
 	}
 	else if (userActions->getActionState("MOVE_PLAYER_DOWN")) {
-		verticalPressed = 1;
-	}
-	else {
-		verticalPressed = 0;
+		direction.setY(1);
 	}
 	if (userActions->getActionState("MOVE_PLAYER_LEFT")) {
-		horizontalPressed = -1;
+		direction.setX(-1);
 	}
 	else if (userActions->getActionState("MOVE_PLAYER_RIGHT")) {
-		horizontalPressed = 1;
+		direction.setX(1);
 	}
-	else {
-		horizontalPressed = 0;
-	}
-
-	int currX = actor->getX(),
-		currY = actor->getY(),
-		newX = currX + actor->getSpeed() / 2 * horizontalPressed,
-		newY = currY + actor->getSpeed() / 2 * verticalPressed,
-		actorWidth = actor->getHitboxWidth() / 2,
-		actorHeight = actor->getHitboxHeight() / 2;
 
 	auto m = engine->getMap();
-	if (!m.areCoordinatesValid(newX - actorWidth, currY)) {
-		newX = actorWidth;
-	}
-	else if (!m.areCoordinatesValid(newX + actorWidth, currY)) {
-		newX = m.getWidth() - actorWidth;
-	}
-	if (!m.areCoordinatesValid(currX, newY - actorHeight)) {
-		newY = actorHeight;
-	}
-	else if (!m.areCoordinatesValid(currX, newY + actorHeight)) {
-		newY = m.getHeight() - actorHeight;
-	}
 	MoveCommand cmd = MoveCommand();
-	cmd.execute(actor, newX, newY);
+	cmd.execute(actor, direction, engine->getMap());
 }
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {

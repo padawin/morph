@@ -26,28 +26,9 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 		direction.setX(1);
 	}
 
-	int currX = actor->getX(),
-		currY = actor->getY(),
-		newX = currX + actor->getSpeed() / 2 * direction.getX(),
-		newY = currY + actor->getSpeed() / 2 * direction.getY(),
-		actorWidth = actor->getHitboxWidth() / 2,
-		actorHeight = actor->getHitboxHeight() / 2;
-
 	auto m = engine->getMap();
-	if (!m.areCoordinatesValid(newX - actorWidth, currY)) {
-		newX = actorWidth;
-	}
-	else if (!m.areCoordinatesValid(newX + actorWidth, currY)) {
-		newX = m.getWidth() - actorWidth;
-	}
-	if (!m.areCoordinatesValid(currX, newY - actorHeight)) {
-		newY = actorHeight;
-	}
-	else if (!m.areCoordinatesValid(currX, newY + actorHeight)) {
-		newY = m.getHeight() - actorHeight;
-	}
 	MoveCommand cmd = MoveCommand();
-	cmd.execute(actor, newX, newY);
+	cmd.execute(actor, direction, engine->getMap());
 }
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {

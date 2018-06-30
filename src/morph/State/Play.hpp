@@ -7,10 +7,10 @@
 class PlayState : public GameState {
 	private:
 	static const std::string s_stateID;
-	Engine m_engine;
+	Engine& m_engine;
 
 	public:
-	PlayState();
+	PlayState(Engine& engine);
 	virtual void update();
 	virtual void render();
 	virtual bool onEnter();

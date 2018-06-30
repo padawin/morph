@@ -5,6 +5,7 @@
 #include <iostream>
 #include "globals.hpp"
 #include "Utils.hpp"
+#include "Engine.hpp"
 #include "SDL2_framework/Game.h"
 #include "State/Play.hpp"
 #include "ResourceManager.hpp"
@@ -19,6 +20,7 @@ int main(int argc, char* args[]) {
 	time_t t;
 	srand((unsigned int) time(&t));
 	Game* g;
+	Engine engine;
 	char buffer[PATH_MAX];
 	std::string binaryPath;
 	Uint32 frameStart, frameTime;
@@ -38,7 +40,7 @@ int main(int argc, char* args[]) {
 		return 1;
 	}
 
-	g->getStateMachine()->changeState(new PlayState());
+	g->getStateMachine()->changeState(new PlayState(engine));
 	while (g->isRunning()) {
 		frameStart = SDL_GetTicks();
 		g->handleEvents();

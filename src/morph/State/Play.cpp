@@ -7,7 +7,7 @@
 
 const std::string PlayState::s_stateID = "PLAY";
 
-PlayState::PlayState() : m_engine(Engine()) {}
+PlayState::PlayState(Engine& engine) : m_engine(engine) {}
 
 void PlayState::update() {
 	if (ServiceProvider::getUserActions()->getActionState("QUIT")) {
@@ -31,6 +31,7 @@ void PlayState::render() {
 }
 
 bool PlayState::onEnter() {
+	m_engine.initialise();
 	bool ret = true;
 	ret &= m_engine.loadTaxonomy(
 		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"

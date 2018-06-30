@@ -29,6 +29,7 @@ class Engine {
 	Engine();
 	~Engine();
 	Map &getMap();
+	void initialise();
 	std::shared_ptr<Actor> getHero();
 	bool loadTaxonomy(std::string filePath);
 	bool loadLevels(std::string filePath);

@@ -1,5 +1,4 @@
 #include "Player.hpp"
-#include "Command/Attack.hpp"
 #include "Command/Move.hpp"
 #include "SDL2_framework/UserActions.h"
 #include "SDL2_framework/ServiceProvider.h"
@@ -32,18 +31,17 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 }
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {
-	AttackCommand cmd = AttackCommand();
 	UserActions* userActions = ServiceProvider::getUserActions();
 	if (userActions->getActionState("ATTACK_UP")) {
-		cmd.execute(actor, 0, -1);
+		actor->attack(ATTACK_UP);
 	}
 	if (userActions->getActionState("ATTACK_RIGHT")) {
-		cmd.execute(actor, 1, 0);
+		actor->attack(ATTACK_RIGHT);
 	}
 	if (userActions->getActionState("ATTACK_DOWN")) {
-		cmd.execute(actor, 0, 1);
+		actor->attack(ATTACK_DOWN);
 	}
 	if (userActions->getActionState("ATTACK_LEFT")) {
-		cmd.execute(actor, -1, 0);
+		actor->attack(ATTACK_LEFT);
 	}
 }

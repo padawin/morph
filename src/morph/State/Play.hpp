@@ -7,7 +7,7 @@
 class PlayState : public GameState {
 	private:
 	static const std::string s_stateID;
-	Engine engine;
+	Engine m_engine;
 
 	public:
 	PlayState();

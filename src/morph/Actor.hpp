@@ -23,8 +23,8 @@ class Actor {
 
 	ActorType &m_type;
 
-	int m_iX = 0;
-	int m_iY = 0;
+	double m_dX = 0;
+	double m_dY = 0;
 
 	int m_iAttackDuration[4] = {0, 0, 0, 0};
 	int m_iInvincibilityFrame = 0;
@@ -50,11 +50,11 @@ class Actor {
 
 	bool isDead();
 
-	void setX(int x);
-	void setY(int y);
+	void setX(double x);
+	void setY(double y);
 
-	int getX();
-	int getY();
+	double getX();
+	double getY();
 	int getSpeed();
 	unsigned char getRed();
 	unsigned char getGreen();

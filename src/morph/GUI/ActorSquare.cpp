@@ -9,8 +9,8 @@ void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *act
 	SDL_Rect r;
 	int actorWidth = actor->getWidth();
 	int actorHeight = actor->getHeight();
-	r.x = actor->getX() - actorWidth / 2 + displayShiftX;
-	r.y = actor->getY() - actorHeight / 2 + displayShiftY;
+	r.x = (int) (actor->getX() - actorWidth / 2 + displayShiftX);
+	r.y = (int) (actor->getY() - actorHeight / 2 + displayShiftY);
 	r.w = actorWidth;
 	r.h = actorHeight;
 	SDL_SetRenderDrawColor(
@@ -41,10 +41,10 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 		attackLeft = actor->getAttackProgress(ATTACK_LEFT),
 		maxLengthAttack = 20,
 		// Center of the actor on the screen coords
-		baseX = actor->getX(),
-		baseY = actor->getY(),
 		actorWidth = actor->getWidth(),
 		actorHeight = actor->getHeight();
+	double baseX = actor->getX(),
+		   baseY = actor->getY();
 	int attackLength = maxLengthAttack;
 	std::map<int, SDL_Rect> attacks;
 	if (full || attackUp) {
@@ -52,8 +52,8 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
 		}
 		SDL_Rect r;
-		r.x = baseX - actorWidth / 2;
-		r.y = baseY - actorHeight / 2 - attackLength;
+		r.x = (int) (baseX - actorWidth / 2);
+		r.y = (int) (baseY - actorHeight / 2 - attackLength);
 		r.w = actorWidth;
 		r.h = attackLength;
 		attacks[ATTACK_UP] = r;
@@ -63,8 +63,8 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
 		}
 		SDL_Rect r;
-		r.x = baseX + actorWidth / 2;
-		r.y = baseY - actorHeight / 2;
+		r.x = (int) (baseX + actorWidth / 2);
+		r.y = (int) (baseY - actorHeight / 2);
 		r.w = attackLength;
 		r.h = actorHeight;
 		attacks[ATTACK_RIGHT] = r;
@@ -74,8 +74,8 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
 		}
 		SDL_Rect r;
-		r.x = baseX - actorWidth / 2;
-		r.y = baseY + actorHeight / 2;
+		r.x = (int) (baseX - actorWidth / 2);
+		r.y = (int) (baseY + actorHeight / 2);
 		r.w = actorWidth;
 		r.h = attackLength;
 		attacks[ATTACK_DOWN] = r;
@@ -85,8 +85,8 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
 		}
 		SDL_Rect r;
-		r.x = baseX - actorWidth / 2 - attackLength;
-		r.y = baseY - actorHeight / 2;
+		r.x = (int) (baseX - actorWidth / 2 - attackLength);
+		r.y = (int) (baseY - actorHeight / 2);
 		r.w = attackLength;
 		r.h = actorHeight;
 		attacks[ATTACK_LEFT] = r;

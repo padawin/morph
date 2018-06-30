@@ -17,6 +17,9 @@ Engine::Engine() :
 	m_mapRenderer(MapRenderer(m_map, m_graphicFactory)),
 	m_camera()
 {
+}
+
+void Engine::initialise() {
 	m_camera = {
 		0, 0,
 		Game::Instance()->getScreenWidth(), Game::Instance()->getScreenHeight()

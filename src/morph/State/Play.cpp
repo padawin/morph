@@ -7,7 +7,7 @@
 
 const std::string PlayState::s_stateID = "PLAY";
 
-PlayState::PlayState() : engine(Engine()) {}
+PlayState::PlayState(Engine& engine) : m_engine(engine) {}
 
 void PlayState::update() {
 	if (ServiceProvider::getUserActions()->getActionState("QUIT")) {
@@ -15,8 +15,8 @@ void PlayState::update() {
 		return;
 	}
 
-	engine.update();
-	if (engine.getHero()->isDead()) {
+	m_engine.update();
+	if (m_engine.getHero()->isDead()) {
 		Game::Instance()->getStateMachine()->changeState(
 			new GameOverState()
 		);
@@ -26,20 +26,21 @@ void PlayState::update() {
 }
 
 void PlayState::render() {
-	engine.render();
+	m_engine.render();
 	GameState::render();
 }
 
 bool PlayState::onEnter() {
+	m_engine.initialise();
 	bool ret = true;
-	ret &= engine.loadTaxonomy(
+	ret &= m_engine.loadTaxonomy(
 		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"
 	);
-	ret &= engine.loadLevels(
+	ret &= m_engine.loadLevels(
 		Game::Instance()->getBinaryPath() + "/../resources/levels.dat"
 	);
 	if (ret) {
-		engine.initialiseHero();
+		m_engine.initialiseHero();
 	}
 	return ret;
 }

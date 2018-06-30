@@ -13,6 +13,8 @@ enum InputType {KEYBOARD_KEY, CONTROLLER_BUTTON, CONTROLLER_STICK, NULL_TYPE};
 
 enum InputUpdateResult {QUIT, HAS_EVENT, HAS_NO_EVENT};
 
+enum InputPressedState {RELEASED, PRESSED, DOWN};
+
 class InputHandler {
 	private:
 	/**
@@ -51,7 +53,7 @@ class InputHandler {
 	 * Maps joysticks ids and buttons state, each joystick has a list of
 	 * buttons set to true or false depending on if the button is pressed
 	 */
-	std::map<int, std::vector<bool>> m_mButtonStates = {};
+	std::map<int, std::vector<InputPressedState>> m_mButtonStates = {};
 
 	/**
 	 * State of the pressed keys on the keyboard;
@@ -61,7 +63,7 @@ class InputHandler {
 	 * Maps joysticks ids and buttons state, each joystick has a list of
 	 * buttons set to true or false depending on if the button is pressed
 	 */
-	std::map<SDL_Scancode, bool> m_mKeysStates = {};
+	std::map<SDL_Scancode, InputPressedState> m_mKeysStates = {};
 
 	/**
 	 * True if any joystick is initialised. If no joystick is present, the flag
@@ -138,23 +140,23 @@ class InputHandler {
 	/**
 	 * Method to get the state of the given button if a given joystick
 	 */
-	bool getButtonState(const unsigned long joyIndex, const unsigned long buttonNumber);
+	InputPressedState getButtonState(const unsigned long joyIndex, const unsigned long buttonNumber);
 
 	/**
 	 * Method to set the state of the given button if a given joystick
 	 */
-	void setButtonState(const unsigned long joyIndex, const unsigned long button, const bool down);
+	void setButtonState(const unsigned long joyIndex, const unsigned long button, const InputPressedState down);
 
 	/**
 	 * Returns true if the provided key (from the keyboard) is pressed, false
 	 * otherwise
 	 */
-	bool getKeyState(const SDL_Scancode key);
+	InputPressedState getKeyState(const SDL_Scancode key);
 
 	/**
 	 * Method to set the state of a given key
 	 */
-	void setKeyState(const SDL_Scancode key, bool value);
+	void setKeyState(const SDL_Scancode key, InputPressedState value);
 };
 
 #endif

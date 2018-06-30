@@ -74,12 +74,12 @@ void UserActions::resetActionState(std::string name) {
 			case CONTROLLER_BUTTON:
 				if (handlerInstance->joysticksInitialised()) {
 					handlerInstance->setButtonState(
-						0, commands[c].buttonId, false
+						0, commands[c].buttonId, RELEASED
 					);
 				}
 				break;
 			case KEYBOARD_KEY:
-				handlerInstance->setKeyState(commands[c].key, false);
+				handlerInstance->setKeyState(commands[c].key, RELEASED);
 				break;
 			case CONTROLLER_STICK:
 			case NULL_TYPE:

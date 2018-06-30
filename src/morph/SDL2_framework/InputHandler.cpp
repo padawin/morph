@@ -93,14 +93,33 @@ void InputHandler::_handleStickEvent(const SDL_Event event) {
  */
 void InputHandler::_handleButtonEvent(const SDL_Event event, const bool isDown) {
 	int joystickId = event.jaxis.which;
-	m_mButtonStates[joystickId][event.jbutton.button] = isDown;
+	if (!isDown) {
+		m_mButtonStates[joystickId][event.jbutton.button] = RELEASED;
+	}
+	else if (m_mButtonStates[joystickId][event.jbutton.button] == RELEASED) {
+		m_mButtonStates[joystickId][event.jbutton.button] = PRESSED;
+	}
+	else if (m_mButtonStates[joystickId][event.jbutton.button] == PRESSED) {
+		m_mButtonStates[joystickId][event.jbutton.button] = DOWN;
+	}
 }
 
 /**
  * Change the state of a pressed or released keyboard key.
  */
 void InputHandler::_handleKeyEvent(const SDL_Event event, const bool isDown) {
-	m_mKeysStates[event.key.keysym.scancode] = isDown;
+	if (!isDown) {
+		m_mKeysStates[event.key.keysym.scancode] = RELEASED;
+	}
+	else if (
+		m_mKeysStates.find(event.key.keysym.scancode) == m_mKeysStates.end()
+		|| m_mKeysStates[event.key.keysym.scancode] == RELEASED
+	) {
+		m_mKeysStates[event.key.keysym.scancode] = PRESSED;
+	}
+	else if (m_mKeysStates[event.key.keysym.scancode] == PRESSED) {
+		m_mKeysStates[event.key.keysym.scancode] = DOWN;
+	}
 }
 
 /**
@@ -148,9 +167,9 @@ void InputHandler::_initialiseJoystick(const int indexJoystick) {
 			Vector2D(0,0),
 			Vector2D(0,0)
 		);
-		std::vector<bool> tempButtons;
+		std::vector<InputPressedState> tempButtons;
 		for (int j = 0; j < SDL_JoystickNumButtons(joy); j++) {
-			tempButtons.push_back(false);
+			tempButtons.push_back(RELEASED);
 		}
 		m_mButtonStates[joystickId] = tempButtons;
 		m_bJoysticksInitialised = true;
@@ -209,18 +228,18 @@ int InputHandler::stickValue(const unsigned long joyIndex, const JoystickControl
 	return value;
 }
 
-bool InputHandler::getButtonState(const unsigned long joystickIndex, const unsigned long buttonNumber) {
+InputPressedState InputHandler::getButtonState(const unsigned long joystickIndex, const unsigned long buttonNumber) {
 	return m_mButtonStates[m_vJoysticks[joystickIndex].first][buttonNumber];
 }
 
-void InputHandler::setButtonState(const unsigned long joystickIndex, const unsigned long button, const bool down) {
+void InputHandler::setButtonState(const unsigned long joystickIndex, const unsigned long button, const InputPressedState down) {
 	m_mButtonStates[m_vJoysticks[joystickIndex].first][button] = down;
 }
 
-bool InputHandler::getKeyState(const SDL_Scancode key) {
+InputPressedState InputHandler::getKeyState(const SDL_Scancode key) {
 	return m_mKeysStates[key];
 }
 
-void InputHandler::setKeyState(const SDL_Scancode key, bool value) {
+void InputHandler::setKeyState(const SDL_Scancode key, InputPressedState value) {
 	m_mKeysStates[key] = value;
 }

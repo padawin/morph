@@ -25,7 +25,6 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 		direction.setX(1);
 	}
 
-	auto m = engine->getMap();
 	MoveCommand cmd = MoveCommand();
 	cmd.execute(actor, direction, engine->getMap());
 }

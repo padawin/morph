@@ -1,6 +1,7 @@
 #include "SDL2/SDL.h"
 #include "EnemySquare.hpp"
 #include "Physics.hpp"
+#include "Command/Move.hpp"
 
 bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 	std::shared_ptr<Actor> player = engine->getHero();
@@ -25,18 +26,18 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 		player->setHealth(player->getHealth() - actor->getAttack());
 	}
 	else {
-		int direction = actor->canTouch(player.get());
-		if (direction != -1) {
-			actor->attack(direction);
+		int attack = actor->canTouch(player.get());
+		if (attack != -1) {
+			actor->attack(attack);
+		}
+		else {
+			// move
+			Vector2D direction = player->getPosition() - actor->getPosition();
+			direction.normalize();
+
+			MoveCommand cmd = MoveCommand();
+			cmd.execute(actor, direction, engine->getMap());
 		}
 	}
-	// if player's attack is touching the actor
-	//		remove health
-	// else if is attacking and touching player
-	//		remove health from player
-	// else if is at reach from player
-	//		attack
-	// else
-	//		move towards player
 	return true;
 }

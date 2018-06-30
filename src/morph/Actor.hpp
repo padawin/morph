@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include "SDL2/SDL.h"
+#include "SDL2_framework/Vector2D.h"
 
 #define ATTACK_UP 0
 #define ATTACK_RIGHT 1
@@ -55,6 +56,7 @@ class Actor {
 
 	double getX();
 	double getY();
+	const Vector2D getPosition();
 	int getSpeed();
 	unsigned char getRed();
 	unsigned char getGreen();

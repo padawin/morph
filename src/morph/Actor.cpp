@@ -28,6 +28,9 @@ void Actor::setX(double x) { m_dX = x; }
 void Actor::setY(double y) { m_dY = y; }
 double Actor::getX() { return m_dX; }
 double Actor::getY() { return m_dY; }
+const Vector2D Actor::getPosition() {
+	return Vector2D((float) m_dX, (float) m_dY);
+}
 int Actor::getSpeed() { return m_type.getData().speed; }
 unsigned char Actor::getRed() { return m_type.getData().red; }
 unsigned char Actor::getGreen() { return m_type.getData().green; }

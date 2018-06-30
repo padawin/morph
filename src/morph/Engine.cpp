@@ -67,8 +67,8 @@ bool Engine::loadLevels(std::string filePath) {
 
 void Engine::initialiseHero() {
 	m_hero = m_actorFactory.createHero();
-	m_hero->setX(m_map.getWidth() / 2);
-	m_hero->setY(9 * m_map.getHeight() / 10);
+	m_hero->setX((double) m_map.getWidth() / 2);
+	m_hero->setY(9 * (double) m_map.getHeight() / 10);
 	m_map.addActor(m_hero);
 }
 

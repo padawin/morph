@@ -3,6 +3,9 @@
 
 #include <memory>
 #include <string>
+#include <map>
+#include "SDL2/SDL.h"
+#include "SDL2_framework/Vector2D.h"
 
 #define ATTACK_UP 0
 #define ATTACK_RIGHT 1
@@ -21,10 +24,11 @@ class Actor {
 
 	ActorType &m_type;
 
-	int m_iX = 0;
-	int m_iY = 0;
+	double m_dX = 0;
+	double m_dY = 0;
 
 	int m_iAttackDuration[4] = {0, 0, 0, 0};
+	int m_iInvincibilityFrame = 0;
 
 	Behaviour* m_behaviour;
 	GraphicActor* m_graphic;
@@ -47,11 +51,12 @@ class Actor {
 
 	bool isDead();
 
-	void setX(int x);
-	void setY(int y);
+	void setX(double x);
+	void setY(double y);
 
-	int getX();
-	int getY();
+	double getX();
+	double getY();
+	const Vector2D getPosition();
 	int getSpeed();
 	unsigned char getRed();
 	unsigned char getGreen();
@@ -61,6 +66,7 @@ class Actor {
 	int getHeight();
 	int getHitboxWidth();
 	int getHitboxHeight();
+	SDL_Rect getHitbox();
 
 	void setLastTimeHit();
 	uint32_t getLastTimeHit();
@@ -69,7 +75,13 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attack);
+	std::map<int, SDL_Rect> getAttacks();
 	int getAttackProgress(int attack);
+
+	bool hasInvincibilityFrame();
+	void setInvincibilityFrame();
+
+	int canTouch(Actor* actor);
 };
 
 #endif

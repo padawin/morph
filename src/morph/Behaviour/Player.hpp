@@ -5,8 +5,6 @@
 #include "Engine.hpp"
 #include "Actor.hpp"
 
-class Map;
-
 class BehaviourPlayer : public Behaviour {
 	private:
 	void _updatePlayerPosition(Actor* actor, Engine* engine);

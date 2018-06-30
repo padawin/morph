@@ -23,7 +23,6 @@ class ActorFactory {
 	ActorFactory(GraphicFactory &graphicFactory);
 	bool parseTaxonomy(const char* taxonomyFile);
 	std::shared_ptr<Actor> createActor(E_ActorTypes type);
-	std::shared_ptr<Actor> createEnemy(E_ActorTypes type);
 	std::shared_ptr<Actor> createHero();
 };
 

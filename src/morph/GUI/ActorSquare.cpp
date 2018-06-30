@@ -2,14 +2,15 @@
 #include <iostream>
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
+#include "Physics.hpp"
 
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
 	SDL_Rect r;
 	int actorWidth = actor->getWidth();
 	int actorHeight = actor->getHeight();
-	r.x = actor->getX() - actorWidth / 2 + displayShiftX;
-	r.y = actor->getY() - actorHeight / 2 + displayShiftY;
+	r.x = (int) (actor->getX() - actorWidth / 2 + displayShiftX);
+	r.y = (int) (actor->getY() - actorHeight / 2 + displayShiftY);
 	r.w = actorWidth;
 	r.h = actorHeight;
 	SDL_SetRenderDrawColor(
@@ -22,54 +23,76 @@ void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *act
 }
 
 void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) {
+	const unsigned char red = actor->getRed(),
+		green = actor->getGreen(),
+		blue = actor->getBlue();
+	for (auto const& it : getAttacks(actor)) {
+		SDL_Rect attack = it.second;
+		attack.x += displayShiftX;
+		attack.y += displayShiftY;
+		_renderAttack(attack, red, green, blue);
+	}
+}
+
+std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
 	const int attackUp = actor->getAttackProgress(ATTACK_UP),
 		attackRight = actor->getAttackProgress(ATTACK_RIGHT),
 		attackDown = actor->getAttackProgress(ATTACK_DOWN),
 		attackLeft = actor->getAttackProgress(ATTACK_LEFT),
 		maxLengthAttack = 20,
 		// Center of the actor on the screen coords
-		baseX = actor->getX() + displayShiftX,
-		baseY = actor->getY() + displayShiftY,
 		actorWidth = actor->getWidth(),
-		actorHeight = actor->getHeight(),
-		attackWidth = actorWidth;
-	const unsigned char red = actor->getRed(),
-		green = actor->getGreen(),
-		blue = actor->getBlue();
-	int attackLength;
-	SDL_Rect r;
-	if (attackUp) {
-		attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
-		r.x = baseX - actorWidth / 2;
-		r.y = baseY - actorHeight / 2 - attackLength;
-		r.w = attackWidth;
+		actorHeight = actor->getHeight();
+	double baseX = actor->getX(),
+		   baseY = actor->getY();
+	int attackLength = maxLengthAttack;
+	std::map<int, SDL_Rect> attacks;
+	if (full || attackUp) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
+		}
+		SDL_Rect r;
+		r.x = (int) (baseX - actorWidth / 2);
+		r.y = (int) (baseY - actorHeight / 2 - attackLength);
+		r.w = actorWidth;
 		r.h = attackLength;
-		_renderAttack(r, red, green, blue);
+		attacks[ATTACK_UP] = r;
 	}
-	if (attackRight) {
-		attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
-		r.x = baseX + actorWidth / 2;
-		r.y = baseY - actorHeight / 2;
+	if (full || attackRight) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
+		}
+		SDL_Rect r;
+		r.x = (int) (baseX + actorWidth / 2);
+		r.y = (int) (baseY - actorHeight / 2);
 		r.w = attackLength;
-		r.h = attackWidth;
-		_renderAttack(r, red, green, blue);
+		r.h = actorHeight;
+		attacks[ATTACK_RIGHT] = r;
 	}
-	if (attackDown) {
-		attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
-		r.x = baseX - actorWidth / 2;
-		r.y = baseY + actorHeight / 2;
-		r.w = attackWidth;
+	if (full || attackDown) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
+		}
+		SDL_Rect r;
+		r.x = (int) (baseX - actorWidth / 2);
+		r.y = (int) (baseY + actorHeight / 2);
+		r.w = actorWidth;
 		r.h = attackLength;
-		_renderAttack(r, red, green, blue);
+		attacks[ATTACK_DOWN] = r;
 	}
-	if (attackLeft) {
-		attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
-		r.x = baseX - actorWidth / 2 - attackLength;
-		r.y = baseY - actorHeight / 2;
+	if (full || attackLeft) {
+		if (!full) {
+			attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
+		}
+		SDL_Rect r;
+		r.x = (int) (baseX - actorWidth / 2 - attackLength);
+		r.y = (int) (baseY - actorHeight / 2);
 		r.w = attackLength;
-		r.h = attackWidth;
-		_renderAttack(r, red, green, blue);
+		r.h = actorHeight;
+		attacks[ATTACK_LEFT] = r;
 	}
+
+	return attacks;
 }
 
 void GraphicActorSquare::_renderAttack(
@@ -81,4 +104,13 @@ void GraphicActorSquare::_renderAttack(
 	Game* game = Game::Instance();
 	SDL_SetRenderDrawColor(game->getRenderer(), red, green, blue, 0);
 	SDL_RenderFillRect(game->getRenderer(), &r);
+}
+
+int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
+	for (auto const& it : getAttacks(actor1, true)) {
+		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
+			return it.first;
+		}
+	}
+	return -1;
 }

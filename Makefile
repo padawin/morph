@@ -72,8 +72,10 @@ gcw: $(OBJGCW)
 	$(CC) -o $(BINDIR)/$(PROG) $^ $(CCDYNAMICFLAGS)
 
 opk: tools build-resources
-	cp -r configs dist/
-	mkdir -p dist/bin
+	mkdir -p dist/bin dist/resources dist/config
+	mkdir -p dist/bin dist/resources
+	cp configs/playercontrolsmapping-gcw.txt dist/configs/playercontrolsmapping.txt
+	cp resources/levels.dat resources/taxonomy.dat dist/resources/
 	cp $(BINDIR)/$(PROG) dist/bin/
 	mksquashfs dist $(TARGETDIST) -all-root -noappend -no-exports -no-xattrs
 

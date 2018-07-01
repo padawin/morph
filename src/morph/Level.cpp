@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "Actor.hpp"
 #include "Level.hpp"
 #include "ResourceManager.hpp"
 
@@ -11,10 +12,37 @@ void Level::update(Map& m) {
 		return;
 	}
 
+	int minX = -20,
+		maxX = 20,
+		minY = -20,
+		maxY = 20;
 	if ((signed) m.getActors().size() < currentLevel.maxSimultaneousEnemies + 1) {
 		int generateEnemy = rand() % 1000;
 		if (generateEnemy > 700) {
-			m.addActor(m_actorFactory.createActor(TYPE_GREEN_SQUARE));
+			std::shared_ptr<Actor> actor = m_actorFactory.createActor(TYPE_GREEN_SQUARE);
+			int side = rand() % 4,
+				x, y;
+			switch (side) {
+				case 0: // up
+					x = minX + rand() % (m.getWidth() + maxX - minX);
+					y = minY;
+					break;
+				case 1: // right
+					x = m.getWidth() + maxX;
+					y = minY + rand() % (m.getWidth() + maxY - minY);
+					break;
+				case 2: // down
+					x = minX + rand() % (m.getWidth() + maxX - minX);
+					y = m.getHeight() + maxY;
+					break;
+				default: // 3, left
+					x = minX;
+					y = minY + rand() % (m.getWidth() + maxY - minY);
+					break;
+			}
+			actor->setX(x);
+			actor->setY(y);
+			m.addActor(actor);
 			currentLevel.enemyCount -= 1;
 		}
 	}

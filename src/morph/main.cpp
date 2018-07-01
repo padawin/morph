@@ -40,6 +40,21 @@ int main(int argc, char* args[]) {
 		return 1;
 	}
 
+	bool ret = true;
+	engine.initialise();
+	ret &= engine.loadTaxonomy(
+		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"
+	);
+	ret &= engine.loadLevels(
+		Game::Instance()->getBinaryPath() + "/../resources/levels.dat"
+	);
+	if (ret) {
+		engine.initialiseHero();
+	}
+	else {
+		return 2;
+	}
+
 	g->getStateMachine()->changeState(new PlayState(engine));
 	while (g->isRunning()) {
 		frameStart = SDL_GetTicks();

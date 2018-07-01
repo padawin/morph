@@ -6,6 +6,10 @@ Level::Level(ActorFactory& actorFactory) : m_actorFactory(actorFactory) {
 
 void Level::update(Map& m) {
 	S_LevelData& currentLevel = m_vLevelsData[m_iCurrentLevel];
+	if (!currentLevel.enemyCount) {
+		return;
+	}
+
 	if ((signed) m.getActors().size() < currentLevel.maxSimultaneousEnemies + 1) {
 		int generateEnemy = rand() % 1000;
 		if (generateEnemy > 700) {
@@ -28,4 +32,18 @@ bool Level::parseLevels(const char* filePath) {
 	}
 
 	return true;
+}
+
+bool Level::isFinished() {
+	return !m_vLevelsData[m_iCurrentLevel].enemyCount;
+}
+
+bool Level::loadNext() {
+	if (m_iCurrentLevel == m_vLevelsData.size() - 1) {
+		return false;
+	}
+	else {
+		++m_iCurrentLevel;
+		return true;
+	}
 }

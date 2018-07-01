@@ -36,7 +36,7 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 			direction.normalize();
 
 			MoveCommand cmd = MoveCommand();
-			cmd.execute(actor, direction, engine->getMap());
+			cmd.execute(actor, direction, engine->getMap(), false);
 		}
 	}
 	return true;

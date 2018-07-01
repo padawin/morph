@@ -34,6 +34,7 @@ class Engine {
 	bool loadTaxonomy(std::string filePath);
 	bool loadLevels(std::string filePath);
 	void initialiseHero();
+	void initialiseHeroPosition();
 	void update();
 	void render();
 };

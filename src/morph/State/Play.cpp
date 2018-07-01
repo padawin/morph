@@ -31,18 +31,7 @@ void PlayState::render() {
 }
 
 bool PlayState::onEnter() {
-	m_engine.initialise();
-	bool ret = true;
-	ret &= m_engine.loadTaxonomy(
-		Game::Instance()->getBinaryPath() + "/../resources/taxonomy.dat"
-	);
-	ret &= m_engine.loadLevels(
-		Game::Instance()->getBinaryPath() + "/../resources/levels.dat"
-	);
-	if (ret) {
-		m_engine.initialiseHero();
-	}
-	return ret;
+	return true;
 }
 
 bool PlayState::onExit() {

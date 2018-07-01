@@ -74,9 +74,9 @@ class Actor {
 	void update(Engine *engine);
 	void render(int displayShiftX, int displayShiftY);
 
-	void attack(int attack);
+	void attack(int attackSide);
 	std::map<int, SDL_Rect> getAttacks();
-	int getAttackProgress(int attack);
+	int getAttackProgress(int attackSide);
 
 	bool hasInvincibilityFrame();
 	void setInvincibilityFrame();

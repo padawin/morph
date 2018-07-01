@@ -16,6 +16,8 @@ class Level {
 	Level(ActorFactory& actorFactory);
 	void update(Map& m);
 	bool parseLevels(const char* filePath);
+	bool isFinished();
+	bool loadNext();
 };
 
 #endif

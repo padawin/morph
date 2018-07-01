@@ -33,3 +33,17 @@ bool Level::parseLevels(const char* filePath) {
 
 	return true;
 }
+
+bool Level::isFinished() {
+	return !m_vLevelsData[m_iCurrentLevel].enemyCount;
+}
+
+bool Level::loadNext() {
+	if (m_iCurrentLevel == m_vLevelsData.size() - 1) {
+		return false;
+	}
+	else {
+		++m_iCurrentLevel;
+		return true;
+	}
+}

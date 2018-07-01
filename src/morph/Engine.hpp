@@ -33,6 +33,8 @@ class Engine {
 	std::shared_ptr<Actor> getHero();
 	bool loadTaxonomy(std::string filePath);
 	bool loadLevels(std::string filePath);
+	bool isLevelFinished();
+	bool loadNextLevel();
 	void initialiseHero();
 	void initialiseHeroPosition();
 	void update();

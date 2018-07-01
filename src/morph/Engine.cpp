@@ -65,6 +65,18 @@ bool Engine::loadLevels(std::string filePath) {
 	return ret;
 }
 
+bool Engine::isLevelFinished() {
+	return m_level.isFinished() && m_map.getActors().size() == 1;
+}
+
+bool Engine::loadNextLevel() {
+	if (m_level.loadNext()) {
+		initialiseHeroPosition();
+		return true;
+	}
+	return false;
+}
+
 void Engine::initialiseHero() {
 	m_hero = m_actorFactory.createHero();
 	initialiseHeroPosition();

@@ -1,6 +1,7 @@
 #include "Play.hpp"
 #include "Utils.hpp"
 #include "GameOver.hpp"
+#include "EndLevel.hpp"
 #include "Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "SDL2_framework/ServiceProvider.h"
@@ -19,6 +20,11 @@ void PlayState::update() {
 	if (m_engine.getHero()->isDead()) {
 		Game::Instance()->getStateMachine()->changeState(
 			new GameOverState()
+		);
+	}
+	else if (m_engine.isLevelFinished()) {
+		Game::Instance()->getStateMachine()->changeState(
+			new EndLevelState(m_engine)
 		);
 	}
 

@@ -6,7 +6,7 @@
 
 class MoveCommand : public Command {
 	public:
-	bool execute(Actor* actor, Vector2D direction, Map& m);
+	bool execute(Actor* actor, Vector2D direction, Map& m, bool boundMap);
 };
 
 #endif

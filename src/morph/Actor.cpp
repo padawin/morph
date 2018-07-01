@@ -69,12 +69,12 @@ void Actor::update(Engine *engine) {
 	if (m_behaviour != 0) {
 		m_behaviour->update(engine, this);
 	}
-	for (int attack = 0; attack < 4; ++attack) {
-		if (m_iAttackDuration[attack] > 0) {
-			m_iAttackDuration[attack] -= getSpeed();
+	for (int attackSide = 0; attackSide < 4; ++attackSide) {
+		if (m_iAttackDuration[attackSide] > 0) {
+			m_iAttackDuration[attackSide] -= getSpeed();
 		}
 		else {
-			m_iAttackDuration[attack] = 0;
+			m_iAttackDuration[attackSide] = 0;
 		}
 	}
 	if (m_iInvincibilityFrame > 0) {
@@ -88,20 +88,20 @@ void Actor::render(int displayShiftX, int displayShiftY) {
 	}
 }
 
-void Actor::attack(int attack) {
-	if (m_iAttackDuration[attack] > 0) {
+void Actor::attack(int attackSide) {
+	if (m_iAttackDuration[attackSide] > 0) {
 		return;
 	}
 
-	m_iAttackDuration[attack] = 100;
+	m_iAttackDuration[attackSide] = 100;
 }
 
 std::map<int, SDL_Rect> Actor::getAttacks() {
 	return m_graphic->getAttacks(this);
 }
 
-int Actor::getAttackProgress(int attack) {
-	return m_iAttackDuration[attack];
+int Actor::getAttackProgress(int attackSide) {
+	return m_iAttackDuration[attackSide];
 }
 
 bool Actor::hasInvincibilityFrame() {

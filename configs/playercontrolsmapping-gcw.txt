@@ -1,0 +1,14 @@
+#name;type;id
+#name;type;key
+#name;type;stickAxis
+#name;type;stickAxis;stickDirection
+QUIT;0;41
+MOVE_PLAYER_UP;0;82
+MOVE_PLAYER_DOWN;0;81
+MOVE_PLAYER_LEFT;0;80
+MOVE_PLAYER_RIGHT;0;79
+ATTACK_UP;0;44
+ATTACK_RIGHT;0;224
+ATTACK_DOWN;0;226
+ATTACK_LEFT;0;225
+CONFIRM;0;40

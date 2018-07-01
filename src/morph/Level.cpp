@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "Level.hpp"
 #include "ResourceManager.hpp"
 

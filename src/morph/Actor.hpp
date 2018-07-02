@@ -75,6 +75,7 @@ class Actor {
 	void render(int displayShiftX, int displayShiftY);
 
 	void attack(int attackSide);
+	void cancelAttacks();
 	std::map<int, SDL_Rect> getAttacks();
 	int getAttackProgress(int attackSide);
 

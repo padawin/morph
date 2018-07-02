@@ -36,7 +36,7 @@ class Engine {
 	bool isLevelFinished();
 	bool loadNextLevel();
 	void initialiseHero();
-	void initialiseHeroPosition();
+	void initialiseHeroData();
 	void update();
 	void render();
 };

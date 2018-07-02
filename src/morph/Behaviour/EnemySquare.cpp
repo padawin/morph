@@ -21,9 +21,11 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 	if (actorIsHit) {
 		actor->setHealth(actor->getHealth() - player->getAttack());
 		actor->setInvincibilityFrame();
+		actor->cancelAttacks();
 	}
 	else if (playerIsHit) {
 		player->setHealth(player->getHealth() - actor->getAttack());
+		actor->cancelAttacks();
 	}
 	else {
 		int attack = actor->canTouch(player.get());

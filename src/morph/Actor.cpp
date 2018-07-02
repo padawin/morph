@@ -96,6 +96,13 @@ void Actor::attack(int attackSide) {
 	m_iAttackDuration[attackSide] = 100;
 }
 
+void Actor::cancelAttacks() {
+	m_iAttackDuration[0] = 0;
+	m_iAttackDuration[1] = 0;
+	m_iAttackDuration[2] = 0;
+	m_iAttackDuration[3] = 0;
+}
+
 std::map<int, SDL_Rect> Actor::getAttacks() {
 	return m_graphic->getAttacks(this);
 }

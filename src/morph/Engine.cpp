@@ -71,7 +71,7 @@ bool Engine::isLevelFinished() {
 
 bool Engine::loadNextLevel() {
 	if (m_level.loadNext()) {
-		initialiseHeroPosition();
+		initialiseHeroData();
 		return true;
 	}
 	return false;
@@ -79,13 +79,14 @@ bool Engine::loadNextLevel() {
 
 void Engine::initialiseHero() {
 	m_hero = m_actorFactory.createHero();
-	initialiseHeroPosition();
+	initialiseHeroData();
 	m_map.addActor(m_hero);
 }
 
-void Engine::initialiseHeroPosition() {
+void Engine::initialiseHeroData() {
 	m_hero->setX((double) m_map.getWidth() / 2);
 	m_hero->setY(9 * (double) m_map.getHeight() / 10);
+	m_hero->setHealth(m_hero->getMaxHealth());
 }
 
 void Engine::update() {

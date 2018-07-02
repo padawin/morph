@@ -71,7 +71,7 @@ void Actor::update(Engine *engine) {
 	}
 	for (int attackSide = 0; attackSide < 4; ++attackSide) {
 		if (m_iAttackDuration[attackSide] > 0) {
-			m_iAttackDuration[attackSide] -= getSpeed();
+			m_iAttackDuration[attackSide] -= getSpeed() * 2;
 		}
 		else {
 			m_iAttackDuration[attackSide] = 0;

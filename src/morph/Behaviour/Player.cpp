@@ -34,16 +34,16 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {
 	UserActions* userActions = ServiceProvider::getUserActions();
-	if (userActions->getActionState("ATTACK_UP")) {
+	if (userActions->getActionState("ATTACK_UP") == PRESSED) {
 		actor->attack(ATTACK_UP);
 	}
-	if (userActions->getActionState("ATTACK_RIGHT")) {
+	if (userActions->getActionState("ATTACK_RIGHT") == PRESSED) {
 		actor->attack(ATTACK_RIGHT);
 	}
-	if (userActions->getActionState("ATTACK_DOWN")) {
+	if (userActions->getActionState("ATTACK_DOWN") == PRESSED) {
 		actor->attack(ATTACK_DOWN);
 	}
-	if (userActions->getActionState("ATTACK_LEFT")) {
+	if (userActions->getActionState("ATTACK_LEFT") == PRESSED) {
 		actor->attack(ATTACK_LEFT);
 	}
 }

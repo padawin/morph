@@ -34,6 +34,9 @@ int UserActions::getActionState(std::string name) {
 			case CONTROLLER_BUTTON:
 				ret = !handlerInstance->joysticksInitialised() ? 0 :
 					handlerInstance->getButtonState(0, commands[c].buttonId);
+				if (ret == PRESSED) {
+					handlerInstance->setButtonState(0, commands[c].buttonId, DOWN);
+				}
 				break;
 			case CONTROLLER_STICK:
 				if (handlerInstance->joysticksInitialised()) {
@@ -48,6 +51,9 @@ int UserActions::getActionState(std::string name) {
 				break;
 			case KEYBOARD_KEY:
 				ret = handlerInstance->getKeyState(commands[c].key);
+				if (ret == PRESSED) {
+					handlerInstance->setKeyState(commands[c].key, DOWN);
+				}
 				break;
 			case NULL_TYPE:
 			default:

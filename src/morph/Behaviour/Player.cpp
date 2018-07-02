@@ -25,8 +25,11 @@ void BehaviourPlayer::_updatePlayerPosition(Actor* actor, Engine* engine) {
 		direction.setX(1);
 	}
 
-	MoveCommand cmd = MoveCommand();
-	cmd.execute(actor, direction, engine->getMap(), true);
+	if (direction.getLength() > 0) {
+		direction.normalize();
+		MoveCommand cmd = MoveCommand();
+		cmd.execute(actor, direction, engine->getMap(), true);
+	}
 }
 
 void BehaviourPlayer::_tryAttack(Actor* actor) {

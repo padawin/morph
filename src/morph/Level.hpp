@@ -19,7 +19,7 @@ class Level {
 	void update(Map& m);
 	bool parseLevels(const char* filePath);
 	bool isFinished();
-	bool loadNext();
+	bool load(int index);
 };
 
 #endif

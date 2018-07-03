@@ -77,12 +77,13 @@ bool Level::isFinished() {
 	return !m_vLevelsData[m_iCurrentLevel].enemyCount;
 }
 
-bool Level::loadNext() {
-	if (m_iCurrentLevel == m_vLevelsData.size() - 1) {
+bool Level::load(int index) {
+	int nextIndex = (int) m_iCurrentLevel + index;
+	if (nextIndex < 0 || (unsigned) nextIndex > m_vLevelsData.size() - 1) {
 		return false;
 	}
 	else {
-		++m_iCurrentLevel;
+		m_iCurrentLevel = (unsigned) nextIndex;
 		return true;
 	}
 }

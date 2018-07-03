@@ -25,6 +25,8 @@ class Engine {
 	std::string m_sObjectsFile = "";
 	SDL_Rect m_camera;
 
+	bool _loadLevel(int index);
+
 	public:
 	Engine();
 	~Engine();

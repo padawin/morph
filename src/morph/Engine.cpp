@@ -70,7 +70,11 @@ bool Engine::isLevelFinished() {
 }
 
 bool Engine::loadNextLevel() {
-	if (m_level.loadNext()) {
+	return _loadLevel(+1);
+}
+
+bool Engine::_loadLevel(int index) {
+	if (m_level.load(index)) {
 		initialiseHeroData();
 		return true;
 	}

@@ -26,6 +26,7 @@ class Map {
 	int getWidth();
 	int getHeight();
 
+	void clearActors(bool deadOnly = false);
 	void clearDeadActors();
 
 	bool areCoordinatesValid(int x, int y);

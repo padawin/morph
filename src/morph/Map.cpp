@@ -14,10 +14,10 @@ void Map::clear() {
 	m_vActors.clear();
 }
 
-void Map::clearDeadActors() {
+void Map::clearActors(bool deadOnly) {
 	long unsigned i = 0;
 	for (auto it = m_vActors.begin(); it != m_vActors.end();) {
-		if (m_vActors[i]->isDead()) {
+		if (m_vActors[i]->isDead() || !deadOnly) {
 			it = m_vActors.erase(it);
 		}
 		else {
@@ -25,6 +25,10 @@ void Map::clearDeadActors() {
 			++i;
 		}
 	}
+}
+
+void Map::clearDeadActors() {
+	clearActors(true);
 }
 
 void Map::setStartPoint(float x, float y) {

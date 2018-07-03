@@ -69,6 +69,10 @@ bool Engine::isLevelFinished() {
 	return m_level.isFinished() && m_map.getActors().size() == 1;
 }
 
+bool Engine::reloadLevel() {
+	return _loadLevel(0);
+}
+
 bool Engine::loadNextLevel() {
 	return _loadLevel(+1);
 }
@@ -104,6 +108,12 @@ void Engine::update() {
 	if (!m_hero->isDead()) {
 		m_map.clearDeadActors();
 		m_level.update(m_map);
+	}
+	else if (m_iLifes > 0) {
+		--m_iLifes;
+		m_map.clearActors();
+		initialiseHero();
+		reloadLevel();
 	}
 }
 

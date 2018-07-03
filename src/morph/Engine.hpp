@@ -14,6 +14,7 @@ class Actor;
 
 class Engine {
 	private:
+	int m_iLifes = 3;
 	std::shared_ptr<Actor> m_hero;
 	GraphicFactory m_graphicFactory;
 	ActorFactory m_actorFactory;
@@ -36,6 +37,7 @@ class Engine {
 	bool loadTaxonomy(std::string filePath);
 	bool loadLevels(std::string filePath);
 	bool isLevelFinished();
+	bool reloadLevel();
 	bool loadNextLevel();
 	void initialiseHero();
 	void initialiseHeroData();

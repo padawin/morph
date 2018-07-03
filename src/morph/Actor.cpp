@@ -21,7 +21,7 @@ int Actor::getMaxHealth() { return m_type.getData().health; }
 int Actor::getAttack() { return m_type.getData().attack; }
 
 bool Actor::isDead() {
-	return m_iHealth < 0;
+	return m_iHealth <= 0;
 }
 
 void Actor::setX(double x) { m_dX = x; }

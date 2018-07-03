@@ -18,6 +18,9 @@ Actor::Actor(ActorType &type) :
 void Actor::setHealth(int health) { m_iHealth = health; }
 int Actor::getHealth() { return m_iHealth; }
 int Actor::getMaxHealth() { return m_type.getData().health; }
+void Actor::setStamina(int stamina) { m_fStamina = (double) stamina; }
+double Actor::getStamina() { return m_fStamina; }
+int Actor::getMaxStamina() { return m_type.getData().stamina; }
 int Actor::getAttack() { return m_type.getData().attack; }
 
 bool Actor::isDead() {

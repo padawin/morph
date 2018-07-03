@@ -21,6 +21,7 @@ class ActorType;
 class Actor {
 	private:
 	int m_iHealth = 0;
+	double m_fStamina = 0;
 
 	ActorType &m_type;
 
@@ -45,9 +46,11 @@ class Actor {
 
 	int getHealth();
 	int getMaxHealth();
+	double getStamina();
+	int getMaxStamina();
 	int getAttack();
 	void setHealth(int health);
-	void setMaxHealth(int maxHealth);
+	void setStamina(int stamina);
 
 	bool isDead();
 

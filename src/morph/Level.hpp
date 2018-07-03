@@ -12,6 +12,8 @@ class Level {
 	std::vector<S_LevelData> m_vLevelsData = {};
 	ActorFactory& m_actorFactory;
 
+	std::shared_ptr<Actor> _createActor();
+
 	public:
 	Level(ActorFactory& actorFactory);
 	void update(Map& m);

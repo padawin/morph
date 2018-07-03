@@ -19,7 +19,7 @@ void Level::update(Map& m) {
 	if ((signed) m.getActors().size() < currentLevel.maxSimultaneousEnemies + 1) {
 		int generateEnemy = rand() % 1000;
 		if (generateEnemy > 700) {
-			std::shared_ptr<Actor> actor = m_actorFactory.createActor(TYPE_GREEN_SQUARE);
+			std::shared_ptr<Actor> actor = _createActor();
 			int side = rand() % 4,
 				x, y;
 			switch (side) {
@@ -46,6 +46,16 @@ void Level::update(Map& m) {
 			currentLevel.enemyCount -= 1;
 		}
 	}
+}
+
+std::shared_ptr<Actor> Level::_createActor() {
+	// first type is the player
+	int difficulty = m_vLevelsData[m_iCurrentLevel].difficulty;
+	if (difficulty >= NB_TYPES) {
+		difficulty = NB_TYPES - 1;
+	}
+	E_ActorTypes type = (E_ActorTypes) (1 + rand() % difficulty);
+	return m_actorFactory.createActor(type);
 }
 
 bool Level::parseLevels(const char* filePath) {

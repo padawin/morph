@@ -12,6 +12,7 @@ std::shared_ptr<Actor> ActorType::createActor(
 ) {
 	std::shared_ptr<Actor> actor(std::make_shared<Actor>(*this));
 	actor->setHealth(actor->getMaxHealth());
+	actor->setStamina(actor->getMaxStamina());
 	actor->setGraphic(graphicFactory.getGraphicActor(
 		(long unsigned) m_data.graphic)
 	);

@@ -18,6 +18,9 @@ Actor::Actor(ActorType &type) :
 void Actor::setHealth(int health) { m_iHealth = health; }
 int Actor::getHealth() { return m_iHealth; }
 int Actor::getMaxHealth() { return m_type.getData().health; }
+void Actor::setStamina(int stamina) { m_fStamina = (double) stamina; }
+double Actor::getStamina() { return m_fStamina; }
+int Actor::getMaxStamina() { return m_type.getData().stamina; }
 int Actor::getAttack() { return m_type.getData().attack; }
 
 bool Actor::isDead() {
@@ -77,6 +80,12 @@ void Actor::update(Engine *engine) {
 			m_iAttackDuration[attackSide] = 0;
 		}
 	}
+	if (m_iStaminaCooldown < 0) {
+		++m_iStaminaCooldown;
+	}
+	else if (m_fStamina < getMaxStamina()) {
+		m_fStamina += 0.1;
+	}
 	if (m_iInvincibilityFrame > 0) {
 		--m_iInvincibilityFrame;
 	}
@@ -89,10 +98,12 @@ void Actor::render(int displayShiftX, int displayShiftY) {
 }
 
 void Actor::attack(int attackSide) {
-	if (m_iAttackDuration[attackSide] > 0) {
+	if (m_iAttackDuration[attackSide] > 0 || m_fStamina <= 0) {
 		return;
 	}
 
+	m_fStamina -= getAttack();
+	m_iStaminaCooldown = m_fStamina < 0 ? 30 : 15;
 	m_iAttackDuration[attackSide] = 100;
 }
 

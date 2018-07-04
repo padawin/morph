@@ -3,21 +3,20 @@
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
+#include "SDL2/SDL2_gfxPrimitives.h"
 
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
-	SDL_Rect r;
 	int actorWidth = actor->getWidth();
 	int actorHeight = actor->getHeight();
-	r.x = (int) (actor->getX() - actorWidth / 2 + displayShiftX);
-	r.y = (int) (actor->getY() - actorHeight / 2 + displayShiftY);
-	r.w = actorWidth;
-	r.h = actorHeight;
-	SDL_SetRenderDrawColor(
-		game->getRenderer(),
-		actor->getRed(), actor->getGreen(), actor->getBlue(), 0
+	Sint16 x1 = (Sint16) (actor->getX() - actorWidth / 2 + displayShiftX);
+	Sint16 y1 = (Sint16) (actor->getY() - actorHeight / 2 + displayShiftY);
+	Sint16 x2 = (Sint16) (x1 + actorWidth);
+	Sint16 y2 = (Sint16) (y1 + actorHeight);
+	boxRGBA(game->getRenderer(),
+		x1, y1, x2, y2,
+		actor->getRed(), actor->getGreen(), actor->getBlue(), 255
 	);
-	SDL_RenderFillRect(game->getRenderer(), &r);
 
 	_renderAttacks(displayShiftX, displayShiftY, actor);
 }
@@ -102,8 +101,13 @@ void GraphicActorSquare::_renderAttack(
 	const unsigned char blue
 ) {
 	Game* game = Game::Instance();
-	SDL_SetRenderDrawColor(game->getRenderer(), red, green, blue, 0);
-	SDL_RenderFillRect(game->getRenderer(), &r);
+	Sint16 x1 = (Sint16) r.x,
+		   y1 = (Sint16) r.y,
+		   x2 = (Sint16) (r.x + r.w),
+		   y2 = (Sint16) (r.y + r.h);
+	boxRGBA(game->getRenderer(),
+		x1, y1, x2, y2, red, green, blue, 255
+	);
 }
 
 int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {

@@ -3,21 +3,41 @@
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
+#include "SDL2/SDL2_gfxPrimitives.h"
+
+const int ACTOR_RIM_THICKNESS = 2;
+const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
 
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
-	SDL_Rect r;
 	int actorWidth = actor->getWidth();
 	int actorHeight = actor->getHeight();
-	r.x = (int) (actor->getX() - actorWidth / 2 + displayShiftX);
-	r.y = (int) (actor->getY() - actorHeight / 2 + displayShiftY);
-	r.w = actorWidth;
-	r.h = actorHeight;
-	SDL_SetRenderDrawColor(
-		game->getRenderer(),
-		actor->getRed(), actor->getGreen(), actor->getBlue(), 0
-	);
-	SDL_RenderFillRect(game->getRenderer(), &r);
+	Sint16 x1 = (Sint16) (actor->getX() - actorWidth / 2 + displayShiftX);
+	Sint16 y1 = (Sint16) (actor->getY() - actorHeight / 2 + displayShiftY);
+	Sint16 x2 = (Sint16) (x1 + actorWidth);
+	Sint16 y2 = (Sint16) (y1 + actorHeight);
+	std::pair<Sint16, Sint16> sides[] = {
+		// 4 corners, the rim adjustments are to align the attacks
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y1 + ACTOR_RIM_HALF_THICKNESS},
+		{x2, y1 + ACTOR_RIM_HALF_THICKNESS},
+		{x2, y2},
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y2},
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y1 + ACTOR_RIM_HALF_THICKNESS}
+	};
+	for (int i = 0; i < 4; ++i) {
+		thickLineRGBA(
+			game->getRenderer(),
+			sides[i].first, sides[i].second, sides[i + 1].first, sides[i + 1].second,
+			ACTOR_RIM_THICKNESS,
+			actor->getRed(), actor->getGreen(), actor->getBlue(), 255
+		);
+	}
+	if (!actor->isHollow()) {
+		boxRGBA(game->getRenderer(),
+			x1, y1, x2, y2,
+			actor->getRed(), actor->getGreen(), actor->getBlue(), 255
+		);
+	}
 
 	_renderAttacks(displayShiftX, displayShiftY, actor);
 }
@@ -102,8 +122,13 @@ void GraphicActorSquare::_renderAttack(
 	const unsigned char blue
 ) {
 	Game* game = Game::Instance();
-	SDL_SetRenderDrawColor(game->getRenderer(), red, green, blue, 0);
-	SDL_RenderFillRect(game->getRenderer(), &r);
+	Sint16 x1 = (Sint16) r.x,
+		   y1 = (Sint16) r.y,
+		   x2 = (Sint16) (r.x + r.w),
+		   y2 = (Sint16) (r.y + r.h);
+	boxRGBA(game->getRenderer(),
+		x1, y1, x2, y2, red, green, blue, 255
+	);
 }
 
 int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {

@@ -22,6 +22,7 @@ class Actor {
 	private:
 	int m_iHealth = 0;
 	double m_fStamina = 0;
+	int m_iStaminaCooldown = 0;
 
 	ActorType &m_type;
 

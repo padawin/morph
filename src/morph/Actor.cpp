@@ -80,7 +80,10 @@ void Actor::update(Engine *engine) {
 			m_iAttackDuration[attackSide] = 0;
 		}
 	}
-	if (m_fStamina < getMaxStamina()) {
+	if (m_iStaminaCooldown < 0) {
+		++m_iStaminaCooldown;
+	}
+	else if (m_fStamina < getMaxStamina()) {
 		m_fStamina += 0.1;
 	}
 	if (m_iInvincibilityFrame > 0) {
@@ -100,6 +103,7 @@ void Actor::attack(int attackSide) {
 	}
 
 	m_fStamina -= getAttack();
+	m_iStaminaCooldown = m_fStamina < 0 ? 30 : 15;
 	m_iAttackDuration[attackSide] = 100;
 }
 

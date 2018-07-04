@@ -93,7 +93,7 @@ void Engine::initialiseHero() {
 
 void Engine::initialiseHeroData() {
 	m_hero->setX((double) m_map.getWidth() / 2);
-	m_hero->setY(9 * (double) m_map.getHeight() / 10);
+	m_hero->setY((double) m_map.getHeight() / 2);
 	m_hero->setHealth(m_hero->getMaxHealth());
 }
 

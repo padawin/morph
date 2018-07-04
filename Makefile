@@ -30,7 +30,7 @@ CFLAGS := -g -O2 -Wall -Wmissing-declarations -Weffc++ \
 		-Wvariadic-macros \
 		-Wwrite-strings
 LDFLAGS:=-Isrc/morph -Isrc/common
-CCDYNAMICFLAGS := ${CFLAGS} ${LDFLAGS} -lSDL2 -lSDL2_image
+CCDYNAMICFLAGS := ${CFLAGS} ${LDFLAGS} -lSDL2 -lSDL2_image -lSDL2_gfx
 
 SRC := $(shell find $(SRCDIR)/morph/ $(SRCDIR)/common/ -type f -name '*.cpp')
 OBJ := $(patsubst %.cpp,$(BUILDDIR)/%.o,$(SRC))

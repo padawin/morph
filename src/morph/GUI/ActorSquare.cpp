@@ -5,6 +5,9 @@
 #include "Physics.hpp"
 #include "SDL2/SDL2_gfxPrimitives.h"
 
+const int ACTOR_RIM_THICKNESS = 2;
+const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
+
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
 	int actorWidth = actor->getWidth();
@@ -13,10 +16,28 @@ void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *act
 	Sint16 y1 = (Sint16) (actor->getY() - actorHeight / 2 + displayShiftY);
 	Sint16 x2 = (Sint16) (x1 + actorWidth);
 	Sint16 y2 = (Sint16) (y1 + actorHeight);
-	boxRGBA(game->getRenderer(),
-		x1, y1, x2, y2,
-		actor->getRed(), actor->getGreen(), actor->getBlue(), 255
-	);
+	std::pair<Sint16, Sint16> sides[] = {
+		// 4 corners, the rim adjustments are to align the attacks
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y1 + ACTOR_RIM_HALF_THICKNESS},
+		{x2, y1 + ACTOR_RIM_HALF_THICKNESS},
+		{x2, y2},
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y2},
+		{x1 + ACTOR_RIM_HALF_THICKNESS, y1 + ACTOR_RIM_HALF_THICKNESS}
+	};
+	for (int i = 0; i < 4; ++i) {
+		thickLineRGBA(
+			game->getRenderer(),
+			sides[i].first, sides[i].second, sides[i + 1].first, sides[i + 1].second,
+			ACTOR_RIM_THICKNESS,
+			actor->getRed(), actor->getGreen(), actor->getBlue(), 255
+		);
+	}
+	if (!actor->isHollow()) {
+		boxRGBA(game->getRenderer(),
+			x1, y1, x2, y2,
+			actor->getRed(), actor->getGreen(), actor->getBlue(), 255
+		);
+	}
 
 	_renderAttacks(displayShiftX, displayShiftY, actor);
 }

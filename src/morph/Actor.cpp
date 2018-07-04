@@ -15,6 +15,8 @@ Actor::Actor(ActorType &type) :
 {
 }
 
+bool Actor::isHollow() { return m_bHollow; }
+void Actor::setHollow(bool hollow) { m_bHollow = hollow; }
 void Actor::setHealth(int health) { m_iHealth = health; }
 int Actor::getHealth() { return m_iHealth; }
 int Actor::getMaxHealth() { return m_type.getData().health; }

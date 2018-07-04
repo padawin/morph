@@ -23,6 +23,7 @@ class Actor {
 	int m_iHealth = 0;
 	double m_fStamina = 0;
 	int m_iStaminaCooldown = 0;
+	bool m_bHollow = false;
 
 	ActorType &m_type;
 
@@ -45,6 +46,8 @@ class Actor {
 
 	ActorType &getType();
 
+	bool isHollow();
+	void setHollow(bool hollow);
 	int getHealth();
 	int getMaxHealth();
 	double getStamina();

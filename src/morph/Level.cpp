@@ -42,6 +42,7 @@ void Level::update(Map& m) {
 			}
 			actor->setX(x);
 			actor->setY(y);
+			actor->setHollow(true);
 			m.addActor(actor);
 			currentLevel.enemyCount -= 1;
 		}

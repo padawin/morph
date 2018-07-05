@@ -14,7 +14,7 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 		}
 		for (auto const& actorAttack : actor->getAttacks()) {
 			if (physics::areRectIntersecting(playerAttack.second, actorAttack.second)) {
-				actorIsHit = true;
+				actor->cancelAttacks();
 				goto testHitPlayer;
 			}
 		}

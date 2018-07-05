@@ -1,5 +1,4 @@
 #include "ActorSquare.hpp"
-#include <iostream>
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
@@ -55,64 +54,58 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 }
 
 std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
-	const int attackUp = actor->getAttackProgress(ATTACK_UP),
-		attackRight = actor->getAttackProgress(ATTACK_RIGHT),
-		attackDown = actor->getAttackProgress(ATTACK_DOWN),
-		attackLeft = actor->getAttackProgress(ATTACK_LEFT),
-		maxLengthAttack = 20,
-		// Center of the actor on the screen coords
-		actorWidth = actor->getWidth(),
-		actorHeight = actor->getHeight();
+	const int attacks[4] = {
+		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
+	};
+	std::map<int, SDL_Rect> attackAreas;
+	const int maxLengthAttack = 20,
+			  // Center of the actor on the screen coords
+			  actorWidth = actor->getWidth(),
+			  actorHeight = actor->getHeight();
 	double baseX = actor->getX(),
 		   baseY = actor->getY();
-	int attackLength = maxLengthAttack;
-	std::map<int, SDL_Rect> attacks;
-	if (full || attackUp) {
-		if (!full) {
-			attackLength = maxLengthAttack - (attackUp * maxLengthAttack) / 100;
+	int attackLength;
+	for (int side = 0; side < 4; ++side) {
+		int attack = actor->getAttackProgress(attacks[side]);
+		if (!attack && !full) {
+			continue;
+		}
+		if (full) {
+			attackLength = maxLengthAttack;
+		}
+		else {
+			attackLength = maxLengthAttack - (attack * maxLengthAttack) / 100;
 		}
 		SDL_Rect r;
-		r.x = (int) (baseX - actorWidth / 2);
-		r.y = (int) (baseY - actorHeight / 2 - attackLength);
-		r.w = actorWidth;
-		r.h = attackLength;
-		attacks[ATTACK_UP] = r;
-	}
-	if (full || attackRight) {
-		if (!full) {
-			attackLength = maxLengthAttack - (attackRight * maxLengthAttack) / 100;
+
+		if (attacks[side] == ATTACK_UP || attacks[side] == ATTACK_DOWN) {
+			if (attacks[side] == ATTACK_UP) {
+				r.x = (int) (baseX - actorWidth / 2);
+				r.y = (int) (baseY - actorHeight / 2 - attackLength);
+			}
+			else {
+				r.x = (int) (baseX - actorWidth / 2);
+				r.y = (int) (baseY + actorHeight / 2);
+			}
+			r.w = actorWidth;
+			r.h = attackLength;
 		}
-		SDL_Rect r;
-		r.x = (int) (baseX + actorWidth / 2);
-		r.y = (int) (baseY - actorHeight / 2);
-		r.w = attackLength;
-		r.h = actorHeight;
-		attacks[ATTACK_RIGHT] = r;
-	}
-	if (full || attackDown) {
-		if (!full) {
-			attackLength = maxLengthAttack - (attackDown * maxLengthAttack) / 100;
+		else {
+			if (attacks[side] == ATTACK_LEFT) {
+				r.x = (int) (baseX - actorWidth / 2 - attackLength);
+				r.y = (int) (baseY - actorHeight / 2);
+			}
+			else {
+				r.x = (int) (baseX + actorWidth / 2);
+				r.y = (int) (baseY - actorHeight / 2);
+			}
+			r.w = attackLength;
+			r.h = actorHeight;
 		}
-		SDL_Rect r;
-		r.x = (int) (baseX - actorWidth / 2);
-		r.y = (int) (baseY + actorHeight / 2);
-		r.w = actorWidth;
-		r.h = attackLength;
-		attacks[ATTACK_DOWN] = r;
-	}
-	if (full || attackLeft) {
-		if (!full) {
-			attackLength = maxLengthAttack - (attackLeft * maxLengthAttack) / 100;
-		}
-		SDL_Rect r;
-		r.x = (int) (baseX - actorWidth / 2 - attackLength);
-		r.y = (int) (baseY - actorHeight / 2);
-		r.w = attackLength;
-		r.h = actorHeight;
-		attacks[ATTACK_LEFT] = r;
+		attackAreas[attacks[side]] = r;
 	}
 
-	return attacks;
+	return attackAreas;
 }
 
 void GraphicActorSquare::_renderAttack(

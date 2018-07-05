@@ -1,5 +1,4 @@
 #include "ActorSquare.hpp"
-#include <iostream>
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"

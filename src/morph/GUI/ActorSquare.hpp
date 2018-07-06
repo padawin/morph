@@ -19,7 +19,7 @@ class GraphicActorSquare : public GraphicActor {
 		int displayShiftY,
 		Actor *actor
 	);
-	std::map<int, SDL_Rect> getAttacks(Actor* actor, bool full = false);
+	std::vector<std::pair<int, SDL_Rect>> getAttacks(Actor* actor, bool full = false);
 	int canTouch(Actor* actor1, Actor* actor2);
 };
 

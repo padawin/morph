@@ -53,11 +53,11 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	}
 }
 
-std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
+std::vector<std::pair<int, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
 	const int attacks[4] = {
 		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
 	};
-	std::map<int, SDL_Rect> attackAreas;
+	std::vector<std::pair<int, SDL_Rect>> attackAreas;
 	const int maxLengthAttack = 20,
 			  // Center of the actor on the screen coords
 			  actorWidth = actor->getWidth(),
@@ -102,7 +102,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			r.w = attackLength;
 			r.h = actorHeight;
 		}
-		attackAreas[attacks[side]] = r;
+		attackAreas.push_back({attacks[side], r});
 	}
 
 	return attackAreas;

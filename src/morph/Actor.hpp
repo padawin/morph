@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <map>
+#include <vector>
 #include "SDL2/SDL.h"
 #include "SDL2_framework/Vector2D.h"
 
@@ -83,7 +83,7 @@ class Actor {
 
 	void attack(int attackSide);
 	void cancelAttacks();
-	std::map<int, SDL_Rect> getAttacks();
+	std::vector<std::pair<int, SDL_Rect>> getAttacks();
 	int getAttackProgress(int attackSide);
 
 	bool hasInvincibilityFrame();

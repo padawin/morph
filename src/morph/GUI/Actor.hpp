@@ -3,7 +3,7 @@
 
 #include "GUI.hpp"
 #include "SDL2/SDL.h"
-#include <map>
+#include <vector>
 
 class Actor;
 
@@ -14,7 +14,7 @@ class GraphicActor : public Graphic {
 		int displayShiftY,
 		Actor* actor
 	) = 0;
-	virtual std::map<int, SDL_Rect> getAttacks(Actor* actor, bool full = false) = 0;
+	virtual std::vector<std::pair<int, SDL_Rect>> getAttacks(Actor* actor, bool full = false) = 0;
 	virtual int canTouch(Actor* actor1, Actor* actor2) = 0;
 };
 

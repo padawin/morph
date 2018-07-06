@@ -116,7 +116,7 @@ void Actor::cancelAttacks() {
 	m_iAttackDuration[3] = 0;
 }
 
-std::map<int, SDL_Rect> Actor::getAttacks() {
+std::vector<std::pair<int, SDL_Rect>> Actor::getAttacks() {
 	return m_graphic->getAttacks(this);
 }
 

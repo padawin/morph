@@ -55,8 +55,8 @@ void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *a
 	}
 }
 
-std::map<int, SDL_Rect> GraphicActorTriangle::getAttacks(Actor* actor __attribute__((unused)), bool full __attribute__((unused))) {
-	std::map<int, SDL_Rect> attackAreas;
+std::vector<std::pair<int, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor __attribute__((unused)), bool full __attribute__((unused))) {
+	std::vector<std::pair<int, SDL_Rect>> attackAreas;
 	return attackAreas;
 }
 

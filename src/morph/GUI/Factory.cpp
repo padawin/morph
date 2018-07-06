@@ -1,9 +1,11 @@
 #include "GUI/Factory.hpp"
 #include "GUI/ActorSquare.hpp"
+#include "GUI/ActorTriangle.hpp"
 
 GraphicFactory::GraphicFactory() {
 	m_vGraphics = {
-		new GraphicActorSquare()
+		new GraphicActorSquare(),
+		new GraphicActorTriangle()
 	};
 }
 

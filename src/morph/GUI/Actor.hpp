@@ -16,6 +16,7 @@ class GraphicActor : public Graphic {
 	) = 0;
 	virtual std::vector<std::pair<int, SDL_Rect>> getAttacks(Actor* actor, bool full = false) = 0;
 	virtual int canTouch(Actor* actor1, Actor* actor2) = 0;
+	virtual int getAttackDuration() = 0;
 };
 
 #endif

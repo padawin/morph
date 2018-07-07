@@ -9,6 +9,10 @@
 const int ACTOR_RIM_THICKNESS = 2;
 const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
 
+int GraphicActorTriangle::getAttackDuration() {
+	return 200;
+}
+
 void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	const Sint16 shiftX = (Sint16) (actor->getX() + displayShiftX),
 		   shiftY = (Sint16) (actor->getY() + displayShiftY);

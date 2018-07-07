@@ -7,6 +7,10 @@
 const int ACTOR_RIM_THICKNESS = 2;
 const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
 
+int GraphicActorSquare::getAttackDuration() {
+	return 100;
+}
+
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
 	int actorWidth = actor->getWidth();
@@ -74,7 +78,7 @@ std::vector<std::pair<int, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* acto
 			attackLength = maxLengthAttack;
 		}
 		else {
-			attackLength = maxLengthAttack - (attack * maxLengthAttack) / 100;
+			attackLength = maxLengthAttack - (attack * maxLengthAttack) / getAttackDuration();
 		}
 		SDL_Rect r;
 

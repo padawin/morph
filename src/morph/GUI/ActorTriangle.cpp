@@ -26,27 +26,27 @@ std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(Actor *
 		c = cos(angle * i);
 		x = xOrig * c - yOrig * s;
 		y = xOrig * s + yOrig * c;
-		corners.push_back({(Sint16) x, (Sint16) y});
+		corners.push_back({
+			(Sint16) (actor->getX() + x),
+			(Sint16) (actor->getY() + y)
+		});
 	}
 	return corners;
 }
 
 void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *actor) {
-	const Sint16 shiftX = (Sint16) (actor->getX() + displayShiftX),
-		   shiftY = (Sint16) (actor->getY() + displayShiftY);
 	Game* game = Game::Instance();
 	std::vector<std::pair<Sint16, Sint16>> corners = _getCorners(actor);
 
-	Sint16 x1 = corners[0].first, y1 = corners[0].second,
-		   x2 = corners[1].first, y2 = corners[1].second,
-		   x3 = corners[2].first, y3 = corners[2].second;
+	Sint16 x1 = (Sint16) (displayShiftX + corners[0].first),
+		   y1 = (Sint16) (displayShiftY + corners[0].second),
+		   x2 = (Sint16) (displayShiftX + corners[1].first),
+		   y2 = (Sint16) (displayShiftY + corners[1].second),
+		   x3 = (Sint16) (displayShiftX + corners[2].first),
+		   y3 = (Sint16) (displayShiftY + corners[2].second);
 	if (actor->isHollow()) {
 		std::pair<Sint16, Sint16> sides[] = {
-			// 4 corners, the rim adjustments are to align the attacks
-			{shiftX + x1, shiftY + y1},
-			{shiftX + x2, shiftY + y2},
-			{shiftX + x3, shiftY + y3},
-			{shiftX + x1, shiftY + y1}
+			{x1, y1}, {x2, y2}, {x3, y3}, {x1, y1}
 		};
 		for (int i = 0; i < 3; ++i) {
 			thickLineRGBA(
@@ -58,11 +58,12 @@ void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *a
 		}
 	}
 	else {
-		const Sint16 xs[3] = {(Sint16) (shiftX + x1), (Sint16) (shiftX + x2), (Sint16) (shiftX + x3)};
-		const Sint16 ys[3] = {(Sint16) (shiftY + y1), (Sint16) (shiftY + y2), (Sint16) (shiftY + y3)};
+		const Sint16 xs[3] = {x1, x2, x3};
+		const Sint16 ys[3] = {y1, y2, y3};
 		filledPolygonRGBA(
 			game->getRenderer(),
-			xs, ys, 3, actor->getRed(), actor->getGreen(), actor->getBlue(), 255
+			xs, ys,
+			3, actor->getRed(), actor->getGreen(), actor->getBlue(), 255
 		);
 	}
 }

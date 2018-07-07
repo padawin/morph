@@ -4,6 +4,9 @@
 #include "Actor.hpp"
 
 class GraphicActorTriangle : public GraphicActor {
+	private:
+	std::vector<std::pair<Sint16, Sint16>> _getCorners(Actor *actor);
+
 	public:
 	void render(
 		int displayShiftX,

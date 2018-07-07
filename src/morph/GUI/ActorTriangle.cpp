@@ -13,31 +13,39 @@ int GraphicActorTriangle::getAttackDuration() {
 	return 200;
 }
 
+std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(Actor *actor) {
+	int actorWidth = actor->getWidth();
+	double c, s, xOrig, yOrig, x, y;
+	double angle = 2.0 / 3 * M_PI;
+	// to change depending on the orientation
+	xOrig = 0;
+	yOrig = -actorWidth / 2;
+	std::vector<std::pair<Sint16, Sint16>> corners;
+	for (int i = 0; i < 3 ; ++i) {
+		s = sin(angle * i);
+		c = cos(angle * i);
+		x = xOrig * c - yOrig * s;
+		y = xOrig * s + yOrig * c;
+		corners.push_back({(Sint16) x, (Sint16) y});
+	}
+	return corners;
+}
+
 void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	const Sint16 shiftX = (Sint16) (actor->getX() + displayShiftX),
 		   shiftY = (Sint16) (actor->getY() + displayShiftY);
 	Game* game = Game::Instance();
-	int actorWidth = actor->getWidth();
-	Sint16 x1 = 0;
-	Sint16 y1 = (Sint16) -actorWidth / 2;
-	double c, s, x2, y2, x3, y3;
-	double angle = 2.0 / 3 * M_PI;
-	// rotate second point
-	s = sin(angle);
-	c = cos(angle);
-	x2 = x1 * c - y1 * s;
-	y2 = x1 * s + y1 * c;
-	s = sin(angle * 2);
-	c = cos(angle * 2);
-	x3 = x1 * c - y1 * s;
-	y3 = x1 * s + y1 * c;
+	std::vector<std::pair<Sint16, Sint16>> corners = _getCorners(actor);
 
+	Sint16 x1 = corners[0].first, y1 = corners[0].second,
+		   x2 = corners[1].first, y2 = corners[1].second,
+		   x3 = corners[2].first, y3 = corners[2].second;
 	if (actor->isHollow()) {
 		std::pair<Sint16, Sint16> sides[] = {
 			// 4 corners, the rim adjustments are to align the attacks
 			{shiftX + x1, shiftY + y1},
-			{shiftX + (Sint16) x2,  shiftY + (Sint16) y2},
-			{shiftX + (Sint16) x3,  shiftY + (Sint16) y3},
+			{shiftX + x2, shiftY + y2},
+			{shiftX + x3, shiftY + y3},
 			{shiftX + x1, shiftY + y1}
 		};
 		for (int i = 0; i < 3; ++i) {

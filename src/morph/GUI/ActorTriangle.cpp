@@ -18,9 +18,20 @@ std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(Actor *
 	int actorWidth = actor->getWidth();
 	double c, s, xOrig, yOrig, x, y;
 	double angle = 2.0 / 3 * M_PI;
-	// to change depending on the orientation
 	xOrig = 0;
 	yOrig = -actorWidth / 2;
+	if (m_lastAttack == ATTACK_RIGHT) {
+		xOrig = actorWidth / 2;
+		yOrig = 0;
+	}
+	else if (m_lastAttack == ATTACK_DOWN) {
+		xOrig = 0;
+		yOrig = actorWidth / 2;
+	}
+	else if (m_lastAttack == ATTACK_LEFT) {
+		xOrig = -actorWidth / 2;
+		yOrig = 0;
+	}
 	std::vector<std::pair<Sint16, Sint16>> corners;
 	for (int i = 0; i < 3 ; ++i) {
 		s = sin(angle * i);
@@ -93,6 +104,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 	const int maxLengthAttack = 70;
 	// percentage of the attack the ray is acting
 	const int rayDuration = 50;
+	bool isHorizontal = m_lastAttack == ATTACK_LEFT || m_lastAttack == ATTACK_RIGHT;
 	for (int side = 0; side < 4; ++side) {
 		int attackLength;
 		int attack = actor->getAttackProgress(attacks[side]);
@@ -109,10 +121,28 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 			if (minBracket < attack && attack < maxBracket) {
 				SDL_Rect ray;
 				attackLength = (attack - minBracket) * maxLengthAttack / rayDuration;
-				ray.x = (int) corner.first;
-				ray.y = (int) corner.second - 2 - attackLength;
-				ray.w = attackWidth;
-				ray.h = attackLength;
+				if (isHorizontal) {
+					if (m_lastAttack == ATTACK_LEFT) {
+						ray.x = (int) corner.first - 2 - attackLength;
+					}
+					else {
+						ray.x = (int) corner.first + 2;
+					}
+					ray.y = (int) corner.second - 1;
+					ray.w = attackLength;
+					ray.h = attackWidth;
+				}
+				else {
+					if (m_lastAttack == ATTACK_UP) {
+						ray.y = (int) corner.second - 2 - attackLength;
+					}
+					else {
+						ray.y = (int) corner.second + 2;
+					}
+					ray.x = (int) corner.first - 1;
+					ray.w = attackWidth;
+					ray.h = attackLength;
+				}
 				attackAreas.push_back({attacks[side], ray});
 			}
 			++r;

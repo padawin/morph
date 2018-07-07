@@ -6,6 +6,13 @@
 class GraphicActorTriangle : public GraphicActor {
 	private:
 	std::vector<std::pair<Sint16, Sint16>> _getCorners(Actor *actor);
+	void _renderAttacks(int displayShiftX, int displayShiftY, Actor *actor);
+	void _renderAttack(
+		const SDL_Rect r,
+		const unsigned char red,
+		const unsigned char green,
+		const unsigned char blue
+	);
 
 	public:
 	void render(

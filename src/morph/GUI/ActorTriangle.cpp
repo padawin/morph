@@ -66,11 +66,74 @@ void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *a
 			3, actor->getRed(), actor->getGreen(), actor->getBlue(), 255
 		);
 	}
+
+	_renderAttacks(displayShiftX, displayShiftY, actor);
 }
 
-std::vector<std::pair<int, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor __attribute__((unused)), bool full __attribute__((unused))) {
+void GraphicActorTriangle::_renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) {
+	const unsigned char red = actor->getRed(),
+		green = actor->getGreen(),
+		blue = actor->getBlue();
+	for (auto const& it : getAttacks(actor)) {
+		SDL_Rect attack = it.second;
+		attack.x += displayShiftX;
+		attack.y += displayShiftY;
+		_renderAttack(attack, red, green, blue);
+	}
+}
+
+std::vector<std::pair<int, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full __attribute__((unused))) {
+	const int attacks[4] = {
+		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
+	};
 	std::vector<std::pair<int, SDL_Rect>> attackAreas;
+	const int attackWidth = 2;
+	const int attackDuration = getAttackDuration();
+	const int maxLengthAttack = 70;
+	// percentage of the attack the ray is acting
+	const int rayDuration = 50;
+	for (int side = 0; side < 4; ++side) {
+		int attackLength;
+		int attack = actor->getAttackProgress(attacks[side]);
+		if (!attack) {
+			continue;
+		}
+
+		// Make the attack a percentage
+		attack = 100 - attack * 100 / attackDuration;
+		int r = 0;
+		for (auto corner : _getCorners(actor)) {
+			const int minBracket = 25 * r,
+				  maxBracket = rayDuration + 25 * r;
+			if (minBracket < attack && attack < maxBracket) {
+				SDL_Rect ray;
+				attackLength = (attack - minBracket) * maxLengthAttack / rayDuration;
+				ray.x = (int) corner.first;
+				ray.y = (int) corner.second - 2 - attackLength;
+				ray.w = attackWidth;
+				ray.h = attackLength;
+				attackAreas.push_back({attacks[side], ray});
+			}
+			++r;
+		}
+	}
 	return attackAreas;
+}
+
+void GraphicActorTriangle::_renderAttack(
+	const SDL_Rect r,
+	const unsigned char red,
+	const unsigned char green,
+	const unsigned char blue
+) {
+	Game* game = Game::Instance();
+	Sint16 x1 = (Sint16) r.x,
+		   y1 = (Sint16) r.y,
+		   x2 = (Sint16) (r.x + r.w),
+		   y2 = (Sint16) (r.y + r.h);
+	boxRGBA(game->getRenderer(),
+		x1, y1, x2, y2, red, green, blue, 255
+	);
 }
 
 int GraphicActorTriangle::canTouch(Actor* actor1 __attribute__((unused)), Actor* actor2 __attribute__((unused))) {

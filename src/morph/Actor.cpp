@@ -107,6 +107,7 @@ void Actor::attack(E_ActorAttack attackSide) {
 	m_fStamina -= getAttack();
 	m_iStaminaCooldown = m_fStamina < 0 ? 30 : 15;
 	m_iAttackDuration[attackSide] = m_graphic->getAttackDuration();
+	m_graphic->setLastAttack(attackSide);
 }
 
 void Actor::cancelAttacks() {

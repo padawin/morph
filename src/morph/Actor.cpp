@@ -99,7 +99,7 @@ void Actor::render(int displayShiftX, int displayShiftY) {
 	}
 }
 
-void Actor::attack(int attackSide) {
+void Actor::attack(E_ActorAttack attackSide) {
 	if (m_iAttackDuration[attackSide] > 0 || m_fStamina <= 0) {
 		return;
 	}
@@ -116,11 +116,11 @@ void Actor::cancelAttacks() {
 	m_iAttackDuration[3] = 0;
 }
 
-std::vector<std::pair<int, SDL_Rect>> Actor::getAttacks() {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> Actor::getAttacks() {
 	return m_graphic->getAttacks(this);
 }
 
-int Actor::getAttackProgress(int attackSide) {
+int Actor::getAttackProgress(E_ActorAttack attackSide) {
 	return m_iAttackDuration[attackSide];
 }
 
@@ -132,6 +132,6 @@ void Actor::setInvincibilityFrame() {
 	m_iInvincibilityFrame = INVINCIBILITY_FRAME;
 }
 
-int Actor::canTouch(Actor* actor) {
+E_ActorAttack Actor::canTouch(Actor* actor) {
 	return m_graphic->canTouch(this, actor);
 }

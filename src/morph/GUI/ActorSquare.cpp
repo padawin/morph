@@ -1,4 +1,5 @@
 #include "ActorSquare.hpp"
+#include "types.hpp"
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
@@ -57,11 +58,11 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	}
 }
 
-std::vector<std::pair<int, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
-	const int attacks[4] = {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
+	const E_ActorAttack attacks[4] = {
 		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
 	};
-	std::vector<std::pair<int, SDL_Rect>> attackAreas;
+	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	const int maxLengthAttack = 20,
 			  // Center of the actor on the screen coords
 			  actorWidth = actor->getWidth(),
@@ -128,11 +129,11 @@ void GraphicActorSquare::_renderAttack(
 	);
 }
 
-int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
+E_ActorAttack GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
 	for (auto const& it : getAttacks(actor1, true)) {
 		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
 			return it.first;
 		}
 	}
-	return -1;
+	return NO_ATTACK;
 }

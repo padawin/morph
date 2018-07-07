@@ -2,6 +2,7 @@
 #include <math.h>
 #include "ActorTriangle.hpp"
 #include "../Actor.hpp"
+#include "types.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
 #include "SDL2/SDL2_gfxPrimitives.h"
@@ -82,11 +83,11 @@ void GraphicActorTriangle::_renderAttacks(int displayShiftX, int displayShiftY, 
 	}
 }
 
-std::vector<std::pair<int, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full __attribute__((unused))) {
-	const int attacks[4] = {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full __attribute__((unused))) {
+	const E_ActorAttack attacks[4] = {
 		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
 	};
-	std::vector<std::pair<int, SDL_Rect>> attackAreas;
+	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	const int attackWidth = 2;
 	const int attackDuration = getAttackDuration();
 	const int maxLengthAttack = 70;
@@ -136,6 +137,6 @@ void GraphicActorTriangle::_renderAttack(
 	);
 }
 
-int GraphicActorTriangle::canTouch(Actor* actor1 __attribute__((unused)), Actor* actor2 __attribute__((unused))) {
-	return -1;
+E_ActorAttack GraphicActorTriangle::canTouch(Actor* actor1 __attribute__((unused)), Actor* actor2 __attribute__((unused))) {
+	return NO_ATTACK;
 }

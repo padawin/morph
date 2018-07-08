@@ -37,8 +37,8 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 		actor->cancelAttacks();
 	}
 	else {
-		int attack = actor->canTouch(player.get());
-		if (attack != -1) {
+		E_ActorAttack attack = actor->canTouch(player.get());
+		if (attack != NO_ATTACK) {
 			actor->attack(attack);
 		}
 		else {

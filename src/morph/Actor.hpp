@@ -3,14 +3,10 @@
 
 #include <memory>
 #include <string>
-#include <map>
+#include <vector>
 #include "SDL2/SDL.h"
 #include "SDL2_framework/Vector2D.h"
-
-#define ATTACK_UP 0
-#define ATTACK_RIGHT 1
-#define ATTACK_DOWN 2
-#define ATTACK_LEFT 3
+#include "types.hpp"
 
 class Behaviour;
 class GraphicActor;
@@ -81,15 +77,15 @@ class Actor {
 	void update(Engine *engine);
 	void render(int displayShiftX, int displayShiftY);
 
-	void attack(int attackSide);
+	void attack(E_ActorAttack attackSide);
 	void cancelAttacks();
-	std::map<int, SDL_Rect> getAttacks();
-	int getAttackProgress(int attackSide);
+	std::vector<std::pair<E_ActorAttack, SDL_Rect>> getAttacks();
+	int getAttackProgress(E_ActorAttack attackSide);
 
 	bool hasInvincibilityFrame();
 	void setInvincibilityFrame();
 
-	int canTouch(Actor* actor);
+	E_ActorAttack canTouch(Actor* actor);
 };
 
 #endif

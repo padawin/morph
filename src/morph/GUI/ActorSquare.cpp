@@ -1,4 +1,5 @@
 #include "ActorSquare.hpp"
+#include "types.hpp"
 #include "../Actor.hpp"
 #include "SDL2_framework/Game.h"
 #include "Physics.hpp"
@@ -6,6 +7,10 @@
 
 const int ACTOR_RIM_THICKNESS = 2;
 const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
+
+int GraphicActorSquare::getAttackDuration() {
+	return 100;
+}
 
 void GraphicActorSquare::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
@@ -53,11 +58,11 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 	}
 }
 
-std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
-	const int attacks[4] = {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
+	const E_ActorAttack attacks[4] = {
 		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
 	};
-	std::map<int, SDL_Rect> attackAreas;
+	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	const int maxLengthAttack = 20,
 			  // Center of the actor on the screen coords
 			  actorWidth = actor->getWidth(),
@@ -74,7 +79,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			attackLength = maxLengthAttack;
 		}
 		else {
-			attackLength = maxLengthAttack - (attack * maxLengthAttack) / 100;
+			attackLength = maxLengthAttack - (attack * maxLengthAttack) / getAttackDuration();
 		}
 		SDL_Rect r;
 
@@ -102,7 +107,7 @@ std::map<int, SDL_Rect> GraphicActorSquare::getAttacks(Actor* actor, bool full) 
 			r.w = attackLength;
 			r.h = actorHeight;
 		}
-		attackAreas[attacks[side]] = r;
+		attackAreas.push_back({attacks[side], r});
 	}
 
 	return attackAreas;
@@ -124,11 +129,11 @@ void GraphicActorSquare::_renderAttack(
 	);
 }
 
-int GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
+E_ActorAttack GraphicActorSquare::canTouch(Actor* actor1, Actor* actor2) {
 	for (auto const& it : getAttacks(actor1, true)) {
 		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
 			return it.first;
 		}
 	}
-	return -1;
+	return NO_ATTACK;
 }

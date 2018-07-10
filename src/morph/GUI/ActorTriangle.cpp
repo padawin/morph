@@ -14,21 +14,23 @@ int GraphicActorTriangle::getAttackDuration() {
 	return 200;
 }
 
-std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(Actor *actor) {
+std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(
+	Actor *actor, E_ActorAttack orientation
+) {
 	int actorWidth = actor->getWidth();
 	double c, s, xOrig, yOrig, x, y;
 	double angle = 2.0 / 3 * M_PI;
 	xOrig = 0;
 	yOrig = -actorWidth / 2;
-	if (m_lastAttack == ATTACK_RIGHT) {
+	if (orientation == ATTACK_RIGHT) {
 		xOrig = actorWidth / 2;
 		yOrig = 0;
 	}
-	else if (m_lastAttack == ATTACK_DOWN) {
+	else if (orientation == ATTACK_DOWN) {
 		xOrig = 0;
 		yOrig = actorWidth / 2;
 	}
-	else if (m_lastAttack == ATTACK_LEFT) {
+	else if (orientation == ATTACK_LEFT) {
 		xOrig = -actorWidth / 2;
 		yOrig = 0;
 	}
@@ -48,7 +50,7 @@ std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(Actor *
 
 void GraphicActorTriangle::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
-	std::vector<std::pair<Sint16, Sint16>> corners = _getCorners(actor);
+	std::vector<std::pair<Sint16, Sint16>> corners = _getCorners(actor, m_lastAttack);
 
 	Sint16 x1 = (Sint16) (displayShiftX + corners[0].first),
 		   y1 = (Sint16) (displayShiftY + corners[0].second),
@@ -115,7 +117,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 		// Make the attack a percentage
 		attack = 100 - attack * 100 / attackDuration;
 		int r = 0;
-		for (auto corner : _getCorners(actor)) {
+		for (auto corner : _getCorners(actor, attacks[side])) {
 			const int minBracket = 25 * r,
 				  maxBracket = rayDuration + 25 * r;
 			if (minBracket < attack && attack < maxBracket) {

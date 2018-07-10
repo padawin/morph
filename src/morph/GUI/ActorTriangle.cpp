@@ -96,7 +96,7 @@ void GraphicActorTriangle::_renderAttacks(int displayShiftX, int displayShiftY, 
 	}
 }
 
-std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full __attribute__((unused))) {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full) {
 	const E_ActorAttack attacks[4] = {
 		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
 	};
@@ -104,27 +104,37 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 	const int attackWidth = 2;
 	const int attackDuration = getAttackDuration();
 	const int maxLengthAttack = 70;
+	int attackLength = maxLengthAttack;
 	// percentage of the attack the ray is acting
 	const int rayDuration = 50;
-	bool isHorizontal = m_lastAttack == ATTACK_LEFT || m_lastAttack == ATTACK_RIGHT;
 	for (int side = 0; side < 4; ++side) {
-		int attackLength;
+		bool isHorizontal = side == ATTACK_LEFT || side == ATTACK_RIGHT;
 		int attack = actor->getAttackProgress(attacks[side]);
-		if (!attack) {
+		if (!full && !attack) {
 			continue;
 		}
 
 		// Make the attack a percentage
-		attack = 100 - attack * 100 / attackDuration;
+		if (full) {
+			attack = 100;
+		}
+		else {
+			attack = 100 - attack * 100 / attackDuration;
+		}
 		int r = 0;
 		for (auto corner : _getCorners(actor, attacks[side])) {
 			const int minBracket = 25 * r,
 				  maxBracket = rayDuration + 25 * r;
-			if (minBracket < attack && attack < maxBracket) {
+			if (full || (minBracket < attack && attack < maxBracket)) {
 				SDL_Rect ray;
-				attackLength = (attack - minBracket) * maxLengthAttack / rayDuration;
+				if (full) {
+					attackLength = maxLengthAttack;
+				}
+				else {
+					attackLength = (attack - minBracket) * maxLengthAttack / rayDuration;
+				}
 				if (isHorizontal) {
-					if (m_lastAttack == ATTACK_LEFT) {
+					if (side == ATTACK_LEFT) {
 						ray.x = (int) corner.first - 2 - attackLength;
 					}
 					else {
@@ -135,7 +145,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 					ray.h = attackWidth;
 				}
 				else {
-					if (m_lastAttack == ATTACK_UP) {
+					if (side == ATTACK_UP) {
 						ray.y = (int) corner.second - 2 - attackLength;
 					}
 					else {
@@ -169,6 +179,11 @@ void GraphicActorTriangle::_renderAttack(
 	);
 }
 
-E_ActorAttack GraphicActorTriangle::canTouch(Actor* actor1 __attribute__((unused)), Actor* actor2 __attribute__((unused))) {
+E_ActorAttack GraphicActorTriangle::canTouch(Actor* actor1, Actor* actor2) {
+	for (auto const& it : getAttacks(actor1, true)) {
+		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
+			return it.first;
+		}
+	}
 	return NO_ATTACK;
 }

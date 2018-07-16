@@ -112,9 +112,36 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorDisc::getAttacks(Act
 }
 
 E_ActorAttack GraphicActorDisc::canTouch(Actor* actor1, Actor* actor2) {
+	SDL_Rect hitbox = actor2->getHitbox();
+	int corners[][2] = {
+		{hitbox.x, hitbox.y},
+		{hitbox.x + hitbox.w, hitbox.y},
+		{hitbox.x, hitbox.y + hitbox.h},
+		{hitbox.x + hitbox.w, hitbox.y + hitbox.h},
+	};
+	long minDistance = ATTACK_RADIUS - actor1->getWidth() / 2;
+	long maxDistance = ATTACK_RADIUS + actor1->getWidth() / 2;
+	// square them to avoid to do a sqrt later
+	minDistance *= minDistance;
+	maxDistance *= maxDistance;
 	for (auto const& it : getAttacks(actor1, true)) {
-		if (physics::areRectIntersecting(it.second, actor2->getHitbox())) {
-			return it.first;
+		// test if any of the corner of actor2->hitBox are within actor1's
+		// attack area. The attack is a disc going in a circle. So the area is a
+		// disc of ATTACK_RADIUS + actorWidth / 2 - the area of a disc of
+		// ATTACK_RADIUS - actorWidth / 2
+		double centerAttack[2] = {
+			(double) (it.second.x + it.second.w / 2),
+			(double) (it.second.y + it.second.h / 2)
+		};
+		for (auto corner : corners) {
+			long distanceX = (int) (centerAttack[0] - corner[0]);
+			long distanceY = (int) (centerAttack[1] - corner[1]);
+			long dist;
+			dist = distanceX * distanceX + distanceY * distanceY;
+			// The corner of the hitbox is touching;
+			if (minDistance <= dist && dist <= maxDistance) {
+				return it.first;
+			}
 		}
 	}
 	return NO_ATTACK;

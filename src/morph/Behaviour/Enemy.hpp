@@ -1,11 +1,11 @@
-#ifndef __BEHAVIOUR_ENEMY_SQUARE__
-#define __BEHAVIOUR_ENEMY_SQUARE__
+#ifndef __BEHAVIOUR_ENEMY__
+#define __BEHAVIOUR_ENEMY__
 
 #include "Behaviour/Behaviour.hpp"
 #include "Engine.hpp"
 #include "Actor.hpp"
 
-class BehaviourEnemySquare : public Behaviour {
+class BehaviourEnemy : public Behaviour {
 	public:
 	bool update(Engine* engine, Actor* actor);
 };

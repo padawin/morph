@@ -1,9 +1,9 @@
 #include "SDL2/SDL.h"
-#include "EnemySquare.hpp"
+#include "Enemy.hpp"
 #include "Physics.hpp"
 #include "Command/Move.hpp"
 
-bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
+bool BehaviourEnemy::update(Engine* engine, Actor* actor) {
 	std::shared_ptr<Actor> player = engine->getHero();
 	bool playerIsHit = false,
 		 actorIsHit = false;

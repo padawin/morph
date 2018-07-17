@@ -4,7 +4,7 @@
 #include "Command/Move.hpp"
 
 bool BehaviourEnemy::update(Engine* engine, Actor* actor) {
-	std::shared_ptr<Actor> player = engine->getHero();
+	Actor* player = engine->getHero().get();
 	bool playerIsHit = false,
 		 actorIsHit = false;
 	for (auto const& playerAttack : player->getAttacks()) {
@@ -37,7 +37,7 @@ bool BehaviourEnemy::update(Engine* engine, Actor* actor) {
 		actor->cancelAttacks();
 	}
 	else {
-		E_ActorAttack attack = actor->canTouch(player.get());
+		E_ActorAttack attack = actor->canTouch(player);
 		if (attack != NO_ATTACK) {
 			actor->attack(attack);
 		}

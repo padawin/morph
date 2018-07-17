@@ -6,6 +6,9 @@
 #include "Actor.hpp"
 
 class BehaviourEnemy : public Behaviour {
+	protected:
+	virtual void _move(Engine* engine, Actor* actor, Actor* player);
+
 	public:
 	bool update(Engine* engine, Actor* actor);
 };

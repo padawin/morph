@@ -42,13 +42,17 @@ bool BehaviourEnemy::update(Engine* engine, Actor* actor) {
 			actor->attack(attack);
 		}
 		else {
-			// move
-			Vector2D direction = player->getPosition() - actor->getPosition();
-			direction.normalize();
-
-			MoveCommand cmd = MoveCommand();
-			cmd.execute(actor, direction, engine->getMap(), false);
+			_move(engine, actor, player);
 		}
 	}
 	return true;
+}
+
+void BehaviourEnemy::_move(Engine* engine, Actor* actor, Actor* player) {
+	// move
+	Vector2D direction = player->getPosition() - actor->getPosition();
+	direction.normalize();
+
+	MoveCommand cmd = MoveCommand();
+	cmd.execute(actor, direction, engine->getMap(), false);
 }

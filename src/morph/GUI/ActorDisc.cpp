@@ -78,31 +78,34 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorDisc::getAttacks(Act
 			continue;
 		}
 
+		SDL_Rect r;
 		// Make the attack a percentage
 		if (full) {
-			attack = 100;
+			r.x = (int) (actor->getX() + ATTACK_RADIUS * initial[side][1] - ATTACK_RADIUS);
+			r.y = (int) (actor->getY() + ATTACK_RADIUS * initial[side][2] - ATTACK_RADIUS);
+			r.w = ATTACK_RADIUS * 2;
+			r.h = ATTACK_RADIUS * 2;
 		}
 		else {
 			attack = 100 - attack * 100 / getAttackDuration();
-		}
 
-		// place the attackCenter depending on the side and the ATTACK_RADIUS
-		angleProgress = initial[side][0] + attack * 2 * M_PI / 100;
-		c = cos(angleProgress);
-		s = sin(angleProgress);
-		// the reference position of the attack is {ATTACK_RADIUS, 0}
-		// so the whole value of x is ATTACK_RADIUS * c - 0 * s
-		xAttack = ATTACK_RADIUS * c;
-		// same for y, the whole value is ATTACK_RADIUS * s + 0 * c
-		yAttack = ATTACK_RADIUS * s;
-		// shift the coordinate to be above the actor
-		xAttack += actor->getX() + ATTACK_RADIUS * initial[side][1];
-		yAttack += actor->getY() + ATTACK_RADIUS * initial[side][2];
-		SDL_Rect r;
-		r.x = (int) (xAttack - actor->getWidth() / 2);
-		r.y = (int) (yAttack - actor->getHeight() / 2);
-		r.w = actor->getWidth();
-		r.h = actor->getHeight();
+			// place the attackCenter depending on the side and the ATTACK_RADIUS
+			angleProgress = initial[side][0] + attack * 2 * M_PI / 100;
+			c = cos(angleProgress);
+			s = sin(angleProgress);
+			// the reference position of the attack is {ATTACK_RADIUS, 0}
+			// so the whole value of x is ATTACK_RADIUS * c - 0 * s
+			xAttack = ATTACK_RADIUS * c;
+			// same for y, the whole value is ATTACK_RADIUS * s + 0 * c
+			yAttack = ATTACK_RADIUS * s;
+			// shift the coordinate to be above the actor
+			xAttack += actor->getX() + ATTACK_RADIUS * initial[side][1];
+			yAttack += actor->getY() + ATTACK_RADIUS * initial[side][2];
+			r.x = (int) (xAttack - actor->getWidth() / 2);
+			r.y = (int) (yAttack - actor->getHeight() / 2);
+			r.w = actor->getWidth();
+			r.h = actor->getHeight();
+		}
 		attackAreas.push_back({attacks[side], r});
 	}
 	return attackAreas;

@@ -1,10 +1,10 @@
 #include "SDL2/SDL.h"
-#include "EnemySquare.hpp"
+#include "Enemy.hpp"
 #include "Physics.hpp"
 #include "Command/Move.hpp"
 
-bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
-	std::shared_ptr<Actor> player = engine->getHero();
+bool BehaviourEnemy::update(Engine* engine, Actor* actor) {
+	Actor* player = engine->getHero().get();
 	bool playerIsHit = false,
 		 actorIsHit = false;
 	for (auto const& playerAttack : player->getAttacks()) {
@@ -37,18 +37,22 @@ bool BehaviourEnemySquare::update(Engine* engine, Actor* actor) {
 		actor->cancelAttacks();
 	}
 	else {
-		E_ActorAttack attack = actor->canTouch(player.get());
+		E_ActorAttack attack = actor->canTouch(player);
 		if (attack != NO_ATTACK) {
 			actor->attack(attack);
 		}
 		else {
-			// move
-			Vector2D direction = player->getPosition() - actor->getPosition();
-			direction.normalize();
-
-			MoveCommand cmd = MoveCommand();
-			cmd.execute(actor, direction, engine->getMap(), false);
+			_move(engine, actor, player);
 		}
 	}
 	return true;
+}
+
+void BehaviourEnemy::_move(Engine* engine, Actor* actor, Actor* player) {
+	// move
+	Vector2D direction = player->getPosition() - actor->getPosition();
+	direction.normalize();
+
+	MoveCommand cmd = MoveCommand();
+	cmd.execute(actor, direction, engine->getMap(), false);
 }

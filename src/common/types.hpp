@@ -13,10 +13,8 @@ struct S_ActorTypeData {
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;
-	int width;
-	int height;
-	int hitboxWidth;
-	int hitboxHeight;
+	int size;
+	int hitboxSize;
 };
 
 struct S_LevelData {

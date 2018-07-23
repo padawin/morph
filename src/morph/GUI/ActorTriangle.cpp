@@ -17,21 +17,21 @@ int GraphicActorTriangle::getAttackDuration() {
 std::vector<std::pair<Sint16, Sint16>> GraphicActorTriangle::_getCorners(
 	Actor *actor, E_ActorAttack orientation
 ) {
-	int actorWidth = actor->getWidth();
+	int actorSize = actor->getSize();
 	double c, s, xOrig, yOrig, x, y;
 	double angle = 2.0 / 3 * M_PI;
 	xOrig = 0;
-	yOrig = -actorWidth / 2;
+	yOrig = -actorSize / 2;
 	if (orientation == ATTACK_RIGHT) {
-		xOrig = actorWidth / 2;
+		xOrig = actorSize / 2;
 		yOrig = 0;
 	}
 	else if (orientation == ATTACK_DOWN) {
 		xOrig = 0;
-		yOrig = actorWidth / 2;
+		yOrig = actorSize / 2;
 	}
 	else if (orientation == ATTACK_LEFT) {
-		xOrig = -actorWidth / 2;
+		xOrig = -actorSize / 2;
 		yOrig = 0;
 	}
 	std::vector<std::pair<Sint16, Sint16>> corners;

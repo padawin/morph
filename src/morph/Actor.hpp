@@ -65,10 +65,8 @@ class Actor {
 	unsigned char getGreen();
 	unsigned char getBlue();
 
-	int getWidth();
-	int getHeight();
-	int getHitboxWidth();
-	int getHitboxHeight();
+	int getSize();
+	int getHitboxSize();
 	SDL_Rect getHitbox();
 
 	void setLastTimeHit();

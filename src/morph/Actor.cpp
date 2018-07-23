@@ -40,16 +40,14 @@ int Actor::getSpeed() { return m_type.getData().speed; }
 unsigned char Actor::getRed() { return m_type.getData().red; }
 unsigned char Actor::getGreen() { return m_type.getData().green; }
 unsigned char Actor::getBlue() { return m_type.getData().blue; }
-int Actor::getWidth() { return m_type.getData().width; }
-int Actor::getHeight() { return m_type.getData().height; }
-int Actor::getHitboxWidth() { return m_type.getData().hitboxWidth; }
-int Actor::getHitboxHeight() { return m_type.getData().hitboxHeight; }
+int Actor::getSize() { return m_type.getData().size; }
+int Actor::getHitboxSize() { return m_type.getData().hitboxSize; }
 SDL_Rect Actor::getHitbox() {
 	SDL_Rect hitbox;
-	hitbox.x = (int) (m_dX - getHitboxWidth() / 2);
-	hitbox.y = (int) (m_dY - getHitboxHeight() / 2);
-	hitbox.w = getHitboxWidth();
-	hitbox.h = getHitboxHeight();
+	hitbox.x = (int) (m_dX - getHitboxSize() / 2);
+	hitbox.y = (int) (m_dY - getHitboxSize() / 2);
+	hitbox.w = getHitboxSize();
+	hitbox.h = getHitboxSize();
 	return hitbox;
 }
 ActorType &Actor::getType() { return m_type; }

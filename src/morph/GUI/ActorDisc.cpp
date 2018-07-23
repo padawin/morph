@@ -6,9 +6,6 @@
 #include "Physics.hpp"
 #include "SDL2/SDL2_gfxPrimitives.h"
 
-const int ACTOR_RIM_THICKNESS = 2;
-const int ACTOR_RIM_HALF_THICKNESS = ACTOR_RIM_THICKNESS / 2;
-
 const int ATTACK_RADIUS = 40;
 
 int GraphicActorDisc::getAttackDuration() {

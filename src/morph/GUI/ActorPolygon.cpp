@@ -5,6 +5,10 @@
 
 const int ACTOR_RIM_THICKNESS = 2;
 
+double GraphicActorPolygon::_getRenderRatio() {
+	return 1;
+}
+
 std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCorners(
 	Actor *actor, E_ActorAttack orientation
 ) {
@@ -25,6 +29,8 @@ std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCor
 		xOrig = -actorSize / 2;
 		yOrig = 0;
 	}
+	xOrig *= _getRenderRatio();
+	yOrig *= _getRenderRatio();
 	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners;
 	for (long unsigned i = 0; i < _getCountCorners() ; ++i) {
 		s = sin(angle * (int) i);

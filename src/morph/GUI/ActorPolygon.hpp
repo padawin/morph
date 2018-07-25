@@ -5,6 +5,7 @@
 
 class GraphicActorPolygon : public GraphicActor {
 	protected:
+	virtual double _getRenderRatio();
 	virtual unsigned int _getCountCorners() = 0;
 	virtual double _getAngleCorners() = 0;
 	std::pair<std::vector<Sint16>, std::vector<Sint16>> _getCorners(Actor *actor, E_ActorAttack orientation);

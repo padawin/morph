@@ -10,23 +10,23 @@ double GraphicActorPolygon::_getRenderRatio() {
 }
 
 std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCorners(
-	Actor *actor, E_ActorAttack orientation
+	Actor *actor, E_ActorAttack orientation, double distanceFromCenter
 ) {
-	int actorSize = actor->getSize();
+	distanceFromCenter += actor->getSize();
 	double c, s, xOrig, yOrig, x, y;
 	double angle = _getAngleCorners();
 	xOrig = 0;
-	yOrig = -actorSize / 2;
+	yOrig = -distanceFromCenter / 2;
 	if (orientation == ATTACK_RIGHT) {
-		xOrig = actorSize / 2;
+		xOrig = distanceFromCenter / 2;
 		yOrig = 0;
 	}
 	else if (orientation == ATTACK_DOWN) {
 		xOrig = 0;
-		yOrig = actorSize / 2;
+		yOrig = distanceFromCenter / 2;
 	}
 	else if (orientation == ATTACK_LEFT) {
-		xOrig = -actorSize / 2;
+		xOrig = -distanceFromCenter / 2;
 		yOrig = 0;
 	}
 	xOrig *= _getRenderRatio();
@@ -45,7 +45,9 @@ std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCor
 
 void GraphicActorPolygon::render(int displayShiftX, int displayShiftY, Actor *actor) {
 	Game* game = Game::Instance();
-	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(actor, m_lastAttack);
+	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(
+		actor, m_lastAttack, 0
+	);
 	long unsigned nbCorners = _getCountCorners();
 
 	if (actor->isHollow()) {

@@ -57,7 +57,9 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 			attack = 100 - attack * 100 / attackDuration;
 		}
 		int r = 0;
-		std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(actor, attacks[side]);
+		std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(
+			actor, attacks[side], 0
+		);
 		for (long unsigned c = 0; c < _getCountCorners(); ++c) {
 			const int minBracket = 25 * r,
 				  maxBracket = rayDuration + 25 * r;

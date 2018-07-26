@@ -44,13 +44,15 @@ std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCor
 }
 
 void GraphicActorPolygon::render(int displayShiftX, int displayShiftY, Actor *actor) {
+	_renderPolygon(displayShiftX, displayShiftY, actor, _getCorners(actor, m_lastAttack, 0), actor->isHollow());
+	_renderAttacks(displayShiftX, displayShiftY, actor);
+}
+
+void GraphicActorPolygon::_renderPolygon(int displayShiftX, int displayShiftY, Actor* actor, std::pair<std::vector<Sint16>, std::vector<Sint16>> corners, bool hollow) {
 	Game* game = Game::Instance();
-	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(
-		actor, m_lastAttack, 0
-	);
 	long unsigned nbCorners = _getCountCorners();
 
-	if (actor->isHollow()) {
+	if (hollow) {
 		for (unsigned int i = 0; i < nbCorners; ++i) {
 			thickLineRGBA(
 				game->getRenderer(),
@@ -70,6 +72,4 @@ void GraphicActorPolygon::render(int displayShiftX, int displayShiftY, Actor *ac
 			actor->getRed(), actor->getGreen(), actor->getBlue(), 255
 		);
 	}
-
-	_renderAttacks(displayShiftX, displayShiftY, actor);
 }

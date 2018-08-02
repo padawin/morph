@@ -26,15 +26,50 @@ double GraphicActorStar::_getAngleCorners() {
 
 void GraphicActorStar::_renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) {
 	for (auto const& it : getAttacks(actor)) {
-		_renderPolygon(displayShiftX, displayShiftY, actor, _getCorners(actor, it.first, 20), true);
+		_renderPolygon(displayShiftX, displayShiftY, actor, _getCorners(actor, it.first, it.second.w / 2), false);
 	}
 }
 
-std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorStar::getAttacks(Actor* actor __attribute__((unused)), bool full __attribute__((unused))) {
+std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorStar::getAttacks(Actor* actor, bool full) {
+	const E_ActorAttack attacks[4] = {
+		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
+	};
+	const int maxLengthAttack = 50;
 	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
+	for (int side = 0; side < 4; ++side) {
+		int attack = actor->getAttackProgress(attacks[side]);
+		if (!full && !attack) {
+			continue;
+		}
+
+		// Make the attack a percentage
+		if (full) {
+			attack = maxLengthAttack;
+		}
+		else {
+			attack = maxLengthAttack - attack * maxLengthAttack / getAttackDuration();
+		}
+		SDL_Rect r = {
+			(int) (actor->getX() - attack),
+			(int) (actor->getY() - attack),
+			attack * 2,
+			attack * 2
+		};
+		attackAreas.push_back({attacks[side], r});
+	}
 	return attackAreas;
 }
 
-E_ActorAttack GraphicActorStar::canTouch(Actor* actor1 __attribute__((unused)), Actor* actor2 __attribute__((unused))) {
+E_ActorAttack GraphicActorStar::canTouch(Actor* actor1, Actor* actor2) {
+	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attacks = getAttacks(actor1, true);
+	double distActorsX = actor2->getX() - actor1->getX();
+	double distActorsY = actor2->getY() - actor1->getY();
+	double distActors = distActorsX * distActorsX + distActorsY * distActorsY;
+	for (auto attack : attacks) {
+		if (attack.second.w * attack.second.w > distActors) {
+			return attack.first;
+		}
+	}
+
 	return NO_ATTACK;
 }

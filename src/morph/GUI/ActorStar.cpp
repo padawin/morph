@@ -13,7 +13,7 @@ double GraphicActorStar::_getRenderRatio() {
 }
 
 int GraphicActorStar::getAttackDuration() {
-	return 200;
+	return 300;
 }
 
 unsigned int GraphicActorStar::_getCountCorners() {

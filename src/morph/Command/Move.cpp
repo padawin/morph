@@ -3,25 +3,24 @@
 #include "Actor.hpp"
 
 bool MoveCommand::execute(Actor* actor, Vector2D direction, Map& m, bool boundMap) {
-	int actorWidth = actor->getHitboxWidth() / 2,
-		actorHeight = actor->getHitboxHeight() / 2;
+	int actorSize = actor->getHitboxSize() / 2;
 	double currX = actor->getX(),
 		   currY = actor->getY(),
 		   newX = currX + (double) actor->getSpeed() / 2 * direction.getX(),
 		   newY = currY + (double) actor->getSpeed() / 2 * direction.getY();
 
 	if (boundMap) {
-		if (!m.areCoordinatesValid((int) (newX - actorWidth), (int) currY)) {
-			newX = actorWidth;
+		if (!m.areCoordinatesValid((int) (newX - actorSize), (int) currY)) {
+			newX = actorSize;
 		}
-		else if (!m.areCoordinatesValid((int) (newX + actorWidth), (int) currY)) {
-			newX = m.getWidth() - actorWidth;
+		else if (!m.areCoordinatesValid((int) (newX + actorSize), (int) currY)) {
+			newX = m.getWidth() - actorSize;
 		}
-		if (!m.areCoordinatesValid((int) currX, (int) (newY - actorHeight))) {
-			newY = actorHeight;
+		if (!m.areCoordinatesValid((int) currX, (int) (newY - actorSize))) {
+			newY = actorSize;
 		}
-		else if (!m.areCoordinatesValid((int) currX, (int) (newY + actorHeight))) {
-			newY = m.getHeight() - actorHeight;
+		else if (!m.areCoordinatesValid((int) currX, (int) (newY + actorSize))) {
+			newY = m.getHeight() - actorSize;
 		}
 	}
 	actor->setX(newX);

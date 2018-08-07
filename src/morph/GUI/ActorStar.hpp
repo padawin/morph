@@ -1,10 +1,11 @@
-#ifndef __GUI_ACTOR_TRIANGLE__
-#define __GUI_ACTOR_TRIANGLE__
+#ifndef __GUI_ACTOR_STAR__
+#define __GUI_ACTOR_STAR__
 
 #include "ActorPolygon.hpp"
 
-class GraphicActorTriangle : public GraphicActorPolygon {
+class GraphicActorStar : public GraphicActorPolygon {
 	private:
+	double _getRenderRatio();
 	unsigned int _getCountCorners();
 	double _getAngleCorners();
 	void _renderAttacks(int displayShiftX, int displayShiftY, Actor *actor);

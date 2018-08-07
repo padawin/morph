@@ -13,10 +13,8 @@ struct S_ActorTypeData {
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;
-	int width;
-	int height;
-	int hitboxWidth;
-	int hitboxHeight;
+	int size;
+	int hitboxSize;
 };
 
 struct S_LevelData {
@@ -27,6 +25,6 @@ struct S_LevelData {
 
 typedef std::pair<int, int> t_coordinates;
 
-enum E_ActorAttack {ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT, NO_ATTACK};
+enum E_ActorAttack {ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT, ATTACK_UP, NO_ATTACK};
 
 #endif

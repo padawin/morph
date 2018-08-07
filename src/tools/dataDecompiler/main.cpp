@@ -71,10 +71,8 @@ void writeActorType(std::ofstream &fileOutStream, S_ActorTypeData actorType) {
 		<< (int) actorType.red << " "
 		<< (int) actorType.green << " "
 		<< (int) actorType.blue << " "
-		<< actorType.width << " "
-		<< actorType.height << " "
-		<< actorType.hitboxWidth << " "
-		<< actorType.hitboxHeight << "\n";
+		<< actorType.size << " "
+		<< actorType.hitboxSize << "\n";
 }
 
 

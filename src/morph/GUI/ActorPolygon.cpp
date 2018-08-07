@@ -48,7 +48,11 @@ void GraphicActorPolygon::render(int displayShiftX, int displayShiftY, Actor *ac
 	_renderAttacks(displayShiftX, displayShiftY, actor);
 }
 
-void GraphicActorPolygon::_renderPolygon(int displayShiftX, int displayShiftY, Actor* actor, std::pair<std::vector<Sint16>, std::vector<Sint16>> corners, bool hollow) {
+void GraphicActorPolygon::_renderPolygon(
+	int displayShiftX, int displayShiftY, Actor* actor,
+	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners,
+	bool hollow
+) {
 	Game* game = Game::Instance();
 	long unsigned nbCorners = _getCountCorners();
 

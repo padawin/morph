@@ -13,7 +13,11 @@ class GraphicActorPolygon : public GraphicActor {
 		double distanceFromCenter, double initialAngle = 0
 	);
 	virtual void _renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) = 0;
-	virtual void _renderPolygon(int displayShiftX, int displayShiftY, Actor* actor, std::pair<std::vector<Sint16>, std::vector<Sint16>> corners, bool hollow);
+	virtual void _renderPolygon(
+		int displayShiftX, int displayShiftY, Actor* actor,
+		std::pair<std::vector<Sint16>, std::vector<Sint16>> corners,
+		bool hollow
+	);
 
 	public:
 	void render(

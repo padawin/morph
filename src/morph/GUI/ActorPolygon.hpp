@@ -9,7 +9,8 @@ class GraphicActorPolygon : public GraphicActor {
 	virtual unsigned int _getCountCorners() = 0;
 	virtual double _getAngleCorners() = 0;
 	std::pair<std::vector<Sint16>, std::vector<Sint16>> _getCorners(
-		Actor *actor, E_ActorAttack orientation, double distanceFromCenter
+		Actor *actor, E_ActorAttack orientation,
+		double distanceFromCenter, double initialAngle = 0
 	);
 	virtual void _renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) = 0;
 	virtual void _renderPolygon(int displayShiftX, int displayShiftY, Actor* actor, std::pair<std::vector<Sint16>, std::vector<Sint16>> corners, bool hollow);

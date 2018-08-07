@@ -10,7 +10,7 @@ double GraphicActorPolygon::_getRenderRatio() {
 }
 
 std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCorners(
-	Actor *actor, E_ActorAttack orientation, double distanceFromCenter
+	Actor *actor, E_ActorAttack orientation, double distanceFromCenter, double initialAngle
 ) {
 	distanceFromCenter += actor->getSize();
 	double c, s, xOrig, yOrig, x, y;
@@ -33,8 +33,8 @@ std::pair<std::vector<Sint16>, std::vector<Sint16>> GraphicActorPolygon::_getCor
 	yOrig *= _getRenderRatio();
 	std::pair<std::vector<Sint16>, std::vector<Sint16>> corners;
 	for (long unsigned i = 0; i < _getCountCorners() ; ++i) {
-		s = sin(angle * (int) i);
-		c = cos(angle * (int) i);
+		s = sin(initialAngle + angle * (int) i);
+		c = cos(initialAngle + angle * (int) i);
 		x = xOrig * c - yOrig * s;
 		y = xOrig * s + yOrig * c;
 		corners.first.push_back((Sint16) (actor->getX() + x));

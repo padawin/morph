@@ -26,7 +26,14 @@ double GraphicActorStar::_getAngleCorners() {
 
 void GraphicActorStar::_renderAttacks(int displayShiftX, int displayShiftY, Actor *actor) {
 	for (auto const& it : getAttacks(actor)) {
-		_renderPolygon(displayShiftX, displayShiftY, actor, _getCorners(actor, it.first, it.second.w / 2), false);
+		_renderPolygon(
+			displayShiftX, displayShiftY, actor,
+			_getCorners(
+				actor, it.first, it.second.w / 2,
+				it.second.w * M_PI / 50
+			),
+			false
+		);
 	}
 }
 

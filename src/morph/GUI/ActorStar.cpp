@@ -70,7 +70,7 @@ E_ActorAttack GraphicActorStar::canTouch(Actor* actor1, Actor* actor2) {
 	double distActorsY = actor2->getY() - actor1->getY();
 	double distActors = distActorsX * distActorsX + distActorsY * distActorsY;
 	for (auto attack : attacks) {
-		if (attack.second.w * attack.second.w > distActors) {
+		if ((attack.second.w * attack.second.w) / 4 > distActors) {
 			return attack.first;
 		}
 	}

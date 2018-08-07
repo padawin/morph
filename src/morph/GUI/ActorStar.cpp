@@ -31,13 +31,10 @@ void GraphicActorStar::_renderAttacks(int displayShiftX, int displayShiftY, Acto
 }
 
 std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorStar::getAttacks(Actor* actor, bool full) {
-	const E_ActorAttack attacks[4] = {
-		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
-	};
 	const int maxLengthAttack = 50;
 	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	for (int side = 0; side < 4; ++side) {
-		int attack = actor->getAttackProgress(attacks[side]);
+		int attack = actor->getAttackProgress((E_ActorAttack) side);
 		if (!full && !attack) {
 			continue;
 		}
@@ -55,7 +52,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorStar::getAttacks(Act
 			attack * 2,
 			attack * 2
 		};
-		attackAreas.push_back({attacks[side], r});
+		attackAreas.push_back({(E_ActorAttack) side, r});
 	}
 	return attackAreas;
 }

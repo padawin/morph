@@ -58,18 +58,16 @@ void GraphicActorSquare::_renderAttacks(int displayShiftX, int displayShiftY, Ac
 }
 
 std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(Actor* actor, bool full) {
-	const E_ActorAttack attacks[4] = {
-		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
-	};
 	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	const int maxLengthAttack = 20,
-			  // Center of the actor on the screen coords
+			  // Center of the actor on the screen curds
 			  actorSize = actor->getSize();
 	double baseX = actor->getX(),
 		   baseY = actor->getY();
 	int attackLength;
 	for (int side = 0; side < 4; ++side) {
-		int attack = actor->getAttackProgress(attacks[side]);
+		E_ActorAttack a = (E_ActorAttack) side;
+		int attack = actor->getAttackProgress(a);
 		if (!attack && !full) {
 			continue;
 		}
@@ -81,8 +79,8 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(A
 		}
 		SDL_Rect r;
 
-		if (attacks[side] == ATTACK_UP || attacks[side] == ATTACK_DOWN) {
-			if (attacks[side] == ATTACK_UP) {
+		if (a == ATTACK_UP || a == ATTACK_DOWN) {
+			if (a == ATTACK_UP) {
 				r.x = (int) (baseX - actorSize / 2);
 				r.y = (int) (baseY - actorSize / 2 - attackLength);
 			}
@@ -94,7 +92,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(A
 			r.h = attackLength;
 		}
 		else {
-			if (attacks[side] == ATTACK_LEFT) {
+			if (a == ATTACK_LEFT) {
 				r.x = (int) (baseX - actorSize / 2 - attackLength);
 				r.y = (int) (baseY - actorSize / 2);
 			}
@@ -105,7 +103,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorSquare::getAttacks(A
 			r.w = attackLength;
 			r.h = actorSize;
 		}
-		attackAreas.push_back({attacks[side], r});
+		attackAreas.push_back({a, r});
 	}
 
 	return attackAreas;

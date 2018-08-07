@@ -32,9 +32,6 @@ void GraphicActorTriangle::_renderAttacks(int displayShiftX, int displayShiftY, 
 }
 
 std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks(Actor* actor, bool full) {
-	const E_ActorAttack attacks[4] = {
-		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
-	};
 	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	const int attackWidth = 2;
 	const int attackDuration = getAttackDuration();
@@ -43,8 +40,9 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 	// percentage of the attack the ray is acting
 	const int rayDuration = 50;
 	for (int side = 0; side < 4; ++side) {
-		bool isHorizontal = side == ATTACK_LEFT || side == ATTACK_RIGHT;
-		int attack = actor->getAttackProgress(attacks[side]);
+		E_ActorAttack a = (E_ActorAttack) side;
+		bool isHorizontal = a == ATTACK_LEFT || a == ATTACK_RIGHT;
+		int attack = actor->getAttackProgress(a);
 		if (!full && !attack) {
 			continue;
 		}
@@ -58,7 +56,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 		}
 		int r = 0;
 		std::pair<std::vector<Sint16>, std::vector<Sint16>> corners = _getCorners(
-			actor, attacks[side], 0
+			actor, a, 0
 		);
 		for (long unsigned c = 0; c < _getCountCorners(); ++c) {
 			const int minBracket = 25 * r,
@@ -72,7 +70,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 					attackLength = (attack - minBracket) * maxLengthAttack / rayDuration;
 				}
 				if (isHorizontal) {
-					if (side == ATTACK_LEFT) {
+					if (a == ATTACK_LEFT) {
 						ray.x = (int) corners.first[c] - 2 - attackLength;
 					}
 					else {
@@ -83,7 +81,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 					ray.h = attackWidth;
 				}
 				else {
-					if (side == ATTACK_UP) {
+					if (a == ATTACK_UP) {
 						ray.y = (int) corners.second[c] - 2 - attackLength;
 					}
 					else {
@@ -93,7 +91,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorTriangle::getAttacks
 					ray.w = attackWidth;
 					ray.h = attackLength;
 				}
-				attackAreas.push_back({attacks[side], ray});
+				attackAreas.push_back({a, ray});
 			}
 			++r;
 		}

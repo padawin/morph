@@ -56,21 +56,18 @@ void GraphicActorDisc::_renderAttacks(int displayShiftX, int displayShiftY, Acto
 }
 
 std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorDisc::getAttacks(Actor* actor, bool full) {
-	const E_ActorAttack attacks[4] = {
-		ATTACK_UP, ATTACK_RIGHT, ATTACK_DOWN, ATTACK_LEFT
-	};
 	double c, s, angleProgress;
 	double xAttack,
 		  yAttack;
 	double initial[][3] = {
-		{1 * M_PI / 2, 0, -1},
 		{2 * M_PI / 2, 1, 0},
 		{3 * M_PI / 2, 0, 1},
-		{4 * M_PI / 2, -1, 0}
+		{4 * M_PI / 2, -1, 0},
+		{1 * M_PI / 2, 0, -1}
 	};
 	std::vector<std::pair<E_ActorAttack, SDL_Rect>> attackAreas;
 	for (int side = 0; side < 4; ++side) {
-		int attack = actor->getAttackProgress(attacks[side]);
+		int attack = actor->getAttackProgress((E_ActorAttack) side);
 		if (!full && !attack) {
 			continue;
 		}
@@ -103,7 +100,7 @@ std::vector<std::pair<E_ActorAttack, SDL_Rect>> GraphicActorDisc::getAttacks(Act
 			r.w = actor->getSize();
 			r.h = actor->getSize();
 		}
-		attackAreas.push_back({attacks[side], r});
+		attackAreas.push_back({(E_ActorAttack) side, r});
 	}
 	return attackAreas;
 }
